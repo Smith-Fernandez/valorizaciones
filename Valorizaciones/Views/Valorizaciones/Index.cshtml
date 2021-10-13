@@ -623,6 +623,14 @@
                 utilidad            = $(this).find('td').eq(3).children().val();
 
                 if (cantidad_actual > 0 && precio > 0) {
+
+                    if (cantidad_actual + acumulado_metrado_anterior > metrado_total) {
+
+                        alert('CORREGIR CANTIDAD');
+                        parseFloat($(this).find('td').eq(8).children().val('0.00'));
+                        return false;
+                    }
+
                     $(this).find('td').eq(9).text((cantidad_actual * precio).toFixed(3));
                     sub_total_actual += (cantidad_actual * precio);
 
