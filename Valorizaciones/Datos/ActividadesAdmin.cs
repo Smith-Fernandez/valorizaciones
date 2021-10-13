@@ -9,7 +9,7 @@ using Valorizaciones.Models;
 namespace Valorizaciones.Datos
 {
     public class ActividadesAdmin : Conexion
-    { //HAHAHAHHAHA PRUEBA
+    { //HAHAHAHHAHA PR
         public IEnumerable<ActividadesModel> ConsultarAll()
         {
             Conectar();
