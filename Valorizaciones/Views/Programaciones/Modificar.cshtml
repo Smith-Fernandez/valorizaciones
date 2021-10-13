@@ -1,0 +1,69 @@
+﻿@model Valorizaciones.Models.ProgramacionesModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Modificar</title>
+</head>
+<body>
+    <span id="dato_contrato_id">
+        @ViewData["vw_contrato_id"]
+    </span>
+
+    @using (Html.BeginForm("Update", "Programaciones"))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>ProgramacionesModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.contrato_id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fecha, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.fecha, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.fecha, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.porcentaje, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.porcentaje, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.porcentaje, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Modificar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+    <script type="text/javascript">
+        
+        $(document).ready(function () {
+            $('form').attr('autocomplete', 'off');
+            var fecha_programacion = $("#fecha").val();
+            fecha_programacion = fecha_programacion.substring(0, 10)
+            $("#fecha").val(fecha_programacion);
+
+            $('#fecha').datepicker({ dateFormat: 'dd/mm/yy' });
+        });
+    </script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</body>
+</html>

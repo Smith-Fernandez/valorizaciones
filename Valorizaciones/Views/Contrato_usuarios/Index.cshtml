@@ -1,0 +1,136 @@
+﻿<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 align="center">Usuarios - <span id="span_contrato"></span></h2>
+<br>
+<div class="container">
+    <div class="row">
+        <div id="div_boton_nuevo" class="col-md-4">
+            <a id="btnNuevo" data-toggle="modal" href="#myModal" class="btn btn-success">Nuevo</a>
+        </div>
+
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control form-control-sm" id="producto" placeholder="Buscar partida">
+            <input type="hidden" id="producto_id" />
+        </div>
+
+        <div class="col-md-1">
+            <button class="btn btn-default" type="button" id="btn_buscar_producto"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    </div>
+    <br>
+
+    <div class="row-fluid">
+        <table role="grid" style="height: auto;" id="tabla_id" class="table table-bordered table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>N.</th>
+                    <th>usuario</th>
+                    <th>correo</th>
+                    <th>nivel</th>
+                    <th id="th_eliminar" class="centro_text"><div align="center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></th>
+                </tr>
+            </thead>
+            <tbody role="rowgroup"></tbody>
+        </table>
+    </div>
+    <div id='div_contenedor'>
+        <ul id="lista_id_pagination" class="pagination lista_paginacion"></ul>
+    </div>
+</div>
+@*<a href="#myModal" class="btnEditar btn-link btn-info" data-toggle="modal" data-id="id"></a>*@
+<script src="~/Scripts/variables.js"></script>
+<script src="~/Scripts/helpers.js"></script>
+<script src="~/Scripts/JqueryCookie.js"></script>
+<script type="text/javascript">
+    var wl = window.location.href;
+    var param_url = wl.substring(wl.indexOf(parametro_url) + parametro_url.length);
+    carga_inicial();
+
+    var tipo_usuario = $.cookie('tipo_usuario_id');
+    if (tipo_usuario == "3" || tipo_usuario == "4") {
+        $("#th_editar").attr("style", "visibility: hidden");
+        $("#th_eliminar").attr("style", "visibility: hidden");
+        $("#div_boton_nuevo").hide();
+    }
+    if (tipo_usuario == "1" || tipo_usuario == "1") {
+        $("#div_boton_nuevo").show();
+    }
+    var ocultar = (tipo_usuario == "1" || tipo_usuario == "2") ? '' : 'visibility:hidden;';
+
+    function carga_inicial() {
+        //CARGA INICIAL
+        var url_l = '/contrato_usuarios/js_contrato_usuarios_ByContrato/' + param_url;
+        console.log('url_l:' + url_l);
+        $.getJSON(url_l)
+            .done(function (data) {
+                //carga = 1;//solo se usa al cargar la página, para activar la pagina N. 1
+                //total_filas = data.total_filas;
+                //construir_paginacion(total_filas, filas_por_pagina, carga)
+
+                var numero_orden = 1;
+                (data).forEach(function (repo) {
+                    agregarFila(numero_orden, repo.contrato_usuario_id, repo.contrato_id, repo.usuario_id, repo.usuario, repo.correo, repo.tipo_usuario);
+                    numero_orden++;
+                });
+            });
+    }
+
+    var contador_fila = 1;
+    var color = '';
+
+    function agregarFila(numero_orden, contrato_usuario_id, contrato_id, usuario_id, usuario, correo, tipo_usuario) {
+        contador_fila++;
+
+        var fila = '<tr ' + color + ' class="seleccionado tabla_fila">';
+        fila += '<td>' + numero_orden + '</td>';
+        fila += '<td>' + usuario + '</td>';
+        fila += '<td>' + correo + '</td>';
+        fila += '<td>' + tipo_usuario + '</td>';
+        fila += '<td style="' + ocultar + '" align="center"><a id="' + contrato_usuario_id + '" class="btn btn-danger  btn-xs btn_eliminar_partida" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-remove"></i></a></td>';
+
+        fila += '</tr>';
+        $("#tabla_id").append(fila);
+    }
+
+    $("#btnNuevo").click(function (eve) {
+        $("#modal-content").load("/contrato_usuarios/Nuevo/?contrato_id=" + param_url);
+    });
+
+    $(document).ready(function () {
+        $("#tabla_id").on('click', '.btn_modificar_partida', function () {
+            $("#modal-content").load("/contrato_usuarios/Modificar/" + $(this).attr('id'));
+        });
+        $("#tabla_id").on('click', '.btn_eliminar_partida', function () {
+            $("#modal-content").load("/contrato_usuarios/Eliminar/" + $(this).attr('id'));
+        });
+        $("#tabla_id").on('click', '.btn_perfil_partida', function () {
+            $("#modal-content").load("/contrato_usuarios/Perfil/" + $(this).attr('id'));
+        });
+
+        var url_contrato = '/contratos/js_contrato_ById/' + param_url;
+        $.getJSON(url_contrato)
+            .done(function (data) {
+                var url_proyecto = '/proyectos/js_proyecto_ById/' + data.proyecto_id;
+                console.log('url_proyecto' + url_proyecto)
+                $.getJSON(url_proyecto)
+                    .done(function (data) {
+                        $("#span_contrato").text(data.proyecto);
+                    });
+            });
+    });
+</script>

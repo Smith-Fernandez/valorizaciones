@@ -1,0 +1,322 @@
+﻿@model Valorizaciones.Models.Contrato_partidas_maestoDetalleModel
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 align="center">Presupuesto</h2>
+<table>
+    <tr>
+        <td>Presupuesto</td>
+        <td></td>
+        <td>&nbsp;&nbsp;<span id="span_cui"></span></td>
+        <td colspan="3">&nbsp;&nbsp;&nbsp;<span id="span_contrato"></span></td>
+    </tr>
+    <tr>
+        <td>Cliente</td>
+        <td></td>
+        <td colspan="4"><span id="span_razon_social"></span></td>
+    </tr>
+    <tr>
+        <td>Lugar</td>
+        <td></td>
+        <td colspan="4">Lima - Lima - Carabayllo</td>
+    </tr>
+    <tr>
+        <td>Adelanto</td>
+        <td><span id="span_adelanto_directo"></span></td>
+        <td></td>
+        <td>Porcentaje Ganador:&nbsp;<span id="span_porcentaje_ganador"></span></td>
+        <td></td>
+        <td colspan="2">Fecha Contrato: <span id="span_fecha"></span></td>
+    </tr>
+</table>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div id="div_nueva_partida" class="col-xs-3">
+                <a id="btnNuevo" data-toggle="modal" href="#myModal" class="btn btn-success">Nuevo</a>
+            </div>
+            <div class="col-xs-3">
+                <a id="btn_pdf" target="_blank" class="btn btn-info" href="">PDF</a>
+            </div>            
+        </div>
+
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control form-control-sm" id="producto" placeholder="Buscar partida">
+            <input type="hidden" id="producto_id" />
+        </div>
+
+        <div class="col-md-1">
+            <button class="btn btn-default" type="button" id="btn_buscar_producto"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    </div>
+    <br>
+    @using (Html.BeginForm("update_presupuesto", "Contrato_partidas"))
+    {
+        <div class="row-fluid">
+            <table role="grid" style="height: auto;" id="tabla_id" class="table table-bordered table-responsive table-hover">
+                <thead>
+                    <tr>
+                        <th>partida</th>
+                        <th>código</th>
+                        <th>cantidad</th>
+                        <th>precio</th>
+                        <th>Precio<br />Parcial</th>
+                        <th>Aprobar</th>
+                        <th id="th_editar" class="centro_text"><div align="center"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></div></th>
+                        <th id="th_eliminar" class="centro_text"><div align="center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></th>
+                    </tr>
+                </thead>
+                <tbody role="rowgroup"></tbody>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">Costo directo:</td>
+                    <td align="right"><span id="costo_directo"></span></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">Gastos generales(<span id="contrato_gastos_generales"></span>%):</td>
+                    <td align="right"><span id="gastos_generales"></span></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">Gastos otros(<span id="contrato_gastos_otros"></span>%):</td>
+                    <td align="right"><span id="gastos_otros"></span></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">Utilidad(<span id="contrato_utilidad"></span>%):</td>
+                    <td align="right"><span id="utilidad"></span></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">Sub Total:</td>
+                    <td align="right"><span id="sub_total"></span></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">IGV(18%):</td>
+                    <td align="right"><span id="igv"></span></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="2">Total:</td>
+                    <td align="right"><span id="total"></span></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <div>
+                <label>Notas</label>
+                <textarea class="form-control" id="presupuesto_notas" name="presupuesto_notas" rows="3"></textarea>
+            </div>
+            <div align="center" id="div_presupuesto">
+                <input type="hidden" name="contrato_id" id="contrato_id" />
+                <input type="submit" value="Guardar Presupuesto" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+    <div id='div_contenedor'>
+        <ul id="lista_id_pagination" class="pagination lista_paginacion"></ul>
+    </div>
+</div>
+
+@*<a href="#myModal" class="btnEditar btn-link btn-info" data-toggle="modal" data-id="id"></a>*@
+<script src="~/Scripts/variables.js"></script>
+<script src="~/Scripts/helpers.js"></script>
+<script src="~/Scripts/JqueryCookie.js"></script>
+<script type="text/javascript">
+
+    var tipo_usuario = $.cookie('tipo_usuario_id');    
+    var wl = window.location.href;;
+    var param_url = wl.substring(wl.indexOf(parametro_url) + parametro_url.length);
+    carga_inicial();
+    $("#btn_pdf").attr('href', '/contrato_partidas/Print/?contrato_id='+param_url);
+    
+    $("#contrato_id").val(param_url);
+
+    if (tipo_usuario == "3" || tipo_usuario == "4") {
+        $("#th_editar").attr("style", "visibility: hidden");
+        $("#th_eliminar").attr("style", "visibility: hidden");
+    }
+    
+    
+    function carga_inicial() {
+        //CARGA INICIAL
+        var url_l = '/contrato_partidas/js_contrato_partidas_ByContrato/' + param_url;
+        console.log('url_l:' + url_l);
+        $.getJSON(url_l)
+        .done(function (data) {
+            //carga = 1;//solo se usa al cargar la página, para activar la pagina N. 1
+            //total_filas = data.total_filas;
+            //construir_paginacion(total_filas, filas_por_pagina, carga)
+
+            var numero_orden = 1;
+            (data).forEach(function (repo) {
+                console.log(repo)
+                agregarFila(numero_orden, repo.id, repo.contrato_id, repo.partida_id, repo.partida, repo.codigo, repo.cantidad, repo.precio, repo.aprobancion_contratista);
+                numero_orden++;
+            });
+        });
+    }
+
+    var contador_fila = 0;
+    var color = '';
+    var precio_parcial = 0;
+    var mostrar_precio_parcial = '';
+    var mostrar_precio = '';
+    var chek_aprobacion = '';
+    var checked = '';
+    var costo_directo = 0;
+    var disabled = (tipo_usuario == "4") ? '' : 'disabled';
+    var ocultar = (tipo_usuario == "1" || tipo_usuario == "2") ? '' : 'visibility:hidden;';
+
+    function agregarFila(numero_orden, id, contrato_id, partida_id, partida, codigo, cantidad, precio, aprobancion_contratista) {
+        precio_parcial = (cantidad * precio);
+
+        if (precio != '' && precio != 0) {
+            mostrar_precio = precio.toFixed(3);
+        }
+
+        if (precio_parcial != '' && precio_parcial != 0) {
+            mostrar_precio_parcial = precio_parcial.toFixed(3);
+        }
+
+        costo_directo += precio_parcial;
+        checked = (aprobancion_contratista == 1) ? 'checked' : '';        
+
+        if (precio == 0 || cantidad == 0) {
+            precio = "";
+            precio_parcial = "";
+            cantidad = "";
+            mostrar_precio = "";
+            mostrar_precio_parcial = ""
+        }
+
+        chek_aprobacion = (cantidad == 0) ? '' : '<input ' + checked + ' type="checkbox"  value="1" ' + disabled + ' id="chek_presupuesto" name="partidas[' + contador_fila + '].aprobancion_contratista">';
+
+        codigo = llenar_ceros_cadena(codigo, '.');
+        color = (precio == 0) ? "style='background-color: #EAF2F8'" : "style='background-color: #FFFFFF'";
+
+        var fila = '<tr ' + color + ' class="seleccionado tabla_fila">';
+        fila += '<td><input type="hidden" name="partidas[' + contador_fila + '].contrato_partida_id" value="' + id + '">' + partida + '</td>';
+        fila += '<td>' + codigo + '</td>';
+        fila += '<td>' + cantidad + '</td>';
+        fila += '<td align="right">' + mostrar_precio + '</td>';
+        fila += '<td align="right">' + mostrar_precio_parcial + '</td>';
+        fila += '<td>' + chek_aprobacion + '</td>';
+
+        fila += '<td style="' + ocultar + '" align="center"><a id="' + id + '" class="btn btn-default btn-xs btn_modificar_partida" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-pencil"></i></a></td>';
+        fila += '<td style="' + ocultar + '" align="center"><a id="' + id + '" class="btn btn-danger  btn-xs btn_eliminar_partida" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-remove"></i></a></td>';
+
+        fila += '</tr>';
+        $("#tabla_id").append(fila);
+
+        contador_fila++;
+    }
+
+    if (tipo_usuario == 4) {
+        $("#div_presupuesto").show();
+    } else {
+        $("#div_presupuesto").hide();
+    }
+
+    if (tipo_usuario == 1) {
+        $("#div_nueva_partida").show();
+    } else {
+        $("#div_nueva_partida").hide();
+    }
+
+    $("#btnNuevo").click(function (eve) {
+        $("#modal-content").load("/contrato_partidas/Nuevo/?contrato_id=" + param_url);
+    });
+
+    $(document).ready(function () {
+        $("#costo_directo").text(costo_directo.toFixed(3));        
+
+        $("#tabla_id").on('click', '.btn_modificar_partida', function () {
+            $("#modal-content").load("/contrato_partidas/Modificar/" + $(this).attr('id'));
+        });
+        $("#tabla_id").on('click', '.btn_eliminar_partida', function () {
+            $("#modal-content").load("/contrato_partidas/Eliminar/" + $(this).attr('id'));
+        });
+        $("#tabla_id").on('click', '.btn_perfil_partida', function () {
+            $("#modal-content").load("/contrato_partidas/Perfil/" + $(this).attr('id'));
+        });
+
+        var url_contrato = '/contratos/js_contrato_ById/' + param_url;
+        $.getJSON(url_contrato)
+            .done(function (data) {
+                $("#presupuesto_notas").val(data.presupuesto_notas);
+                $("#contrato_utilidad").text(data.utilidad.toFixed(3));
+                $("#contrato_gastos_generales").text(data.gastos_generales.toFixed(3));
+                $("#contrato_gastos_otros").text(data.gastos_otros.toFixed(3));
+                $("#span_razon_social").text(data.razon_social);
+                $("#span_adelanto_directo").text(data.adelanto_directo + "%");
+                $("#span_porcentaje_ganador").text(data.porcentaje_ganador + "%");
+                $("#span_fecha").text(data.fecha.substring(0,9));
+
+
+                var gastos_generales = costo_directo * (data.gastos_generales / 100)
+                $("#gastos_generales").text(gastos_generales.toFixed(3));
+
+                var gastos_otros = costo_directo * (data.gastos_otros / 100);
+                $("#gastos_otros").text(gastos_otros.toFixed(3));
+
+                var utilidad = costo_directo * (data.utilidad / 100);
+                $("#utilidad").text(utilidad.toFixed(3));
+
+                var sub_total = costo_directo + gastos_generales + gastos_otros + utilidad;
+                $("#sub_total").text(sub_total.toFixed(3));
+
+                var igv = sub_total * 0.18;
+                $("#igv").text(igv.toFixed(3));
+
+                var total = sub_total * 1.18;
+                $("#total").text(total.toFixed(3));
+                
+                var url_proyecto = '/proyectos/js_proyecto_ById/' + data.proyecto_id;
+                console.log('url_proyecto' + url_proyecto)
+                $.getJSON(url_proyecto)
+                    .done(function (data) {
+                        $("#span_contrato").text(data.proyecto);
+                        $("#span_cui").text(data.cui);                                                
+                });
+        });
+    });
+</script>

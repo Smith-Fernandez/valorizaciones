@@ -1,0 +1,81 @@
+﻿@model Valorizaciones.Models.Contrato_partidasModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Eliminar</title>
+</head>
+<body>
+    <h3>Esta seguro que desea continuar...</h3>
+    <div>
+        <h4>Eliminar partida.</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.contrato_id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.contrato_id)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.partida_id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.partida_id)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.codigo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.codigo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.cantidad)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.cantidad)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.precio)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.precio)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.aprobancion_contratista)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.aprobancion_contratista)
+            </dd>
+
+        </dl>
+        @using (Html.BeginForm("Delete", "contrato_partidas"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.id)
+            @Html.HiddenFor(model => model.contrato_id)
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Eliminar" class="btn btn-default" />
+            </div>
+        }
+    </div>
+</body>
+</html>

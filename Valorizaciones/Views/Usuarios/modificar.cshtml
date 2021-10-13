@@ -1,0 +1,91 @@
+﻿@model Valorizaciones.Models.Usuario_tipoModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>modificar</title>
+</head>
+<body>
+    @using (Html.BeginForm("Update", "Usuarios"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Modificar Usuario</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.usuario_id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.usuario, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.usuario, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.correo, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.numero_documento, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.numero_documento, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.numero_documento, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.tipo_usuario, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <select id="sel_tipo_usuario_id" name="tipo_usuario_id" class="form-control"></select>
+                </div>
+            </div>
+
+            <div id="div_tipo_usuario_id">
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.tipo_usuario_id, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-9">
+                    <input type="submit" value="Modificar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <script type="text/javascript">
+        var ls_tipo_usuarios = JSON.parse(localStorage.getItem("tipo_usuarios"));
+        $.each(ls_tipo_usuarios, function (i, item) {
+            let selected = ($("#tipo_usuario_id").val() == item.id) ? 'selected' : '';
+            $('#sel_tipo_usuario_id').append("<option " + selected + " value='" + item.id + "'>" + item.tipo_usuario + "</option>");
+        });
+
+        $(document).ready(function () {
+            $("#div_tipo_usuario_id").hide();
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_login.cshtml";
+}
+
+<div align="center">
+    @using (Html.BeginForm("Eval", "Usuarios"))
+    {
+        <form class="form-signin">
+            <img class="mb-4" src="~/Images/images.png" alt="" width="172" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Datos de acceso:</h1>
+            <input type="email" id="correo" name="correo" class="form-control" placeholder="Correo Electrónico" required="" autofocus="">
+            <br />
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me">Recordar
+                </label>
+            </div>
+            <div align="center">
+                <div class="col-lg-5">
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+                </div>
+                <div class="col-lg-5">
+                </div>
+                <br />
+                <br />
+                <br />
+                <br />
+            </div>
+            <p class="mt-5 mb-3 text-muted">© 2021-2022</p>
+        </form>
+    }
+</div>

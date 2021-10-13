@@ -1,0 +1,58 @@
+﻿@model Valorizaciones.Models.PartidasModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Nueva Partida</title>
+</head>
+<body>
+    @using (Html.BeginForm("insert", "Partidas"))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Nueva Partida</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.partida, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" name="partida" id="partida" class="form-control" />
+                @Html.ValidationMessageFor(model => model.partida, "", new { @class = "text-danger" })
+            </div>
+            <br /><br /><br />
+            <label class="control-label col-md-2">Unidad</label>
+            <div class="col-md-10">
+                <select id="unidad_id" name="unidad_id" class="form-control"></select>
+                @Html.ValidationMessageFor(model => model.partida, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+        
+    }
+
+    <script type="text/javascript">
+        var ls_unidades = JSON.parse(localStorage.getItem("unidades"));
+        $('#unidad_id').prepend("<option value=''>Seleccionar</option>");
+        $.each(ls_unidades, function (i, item) {
+            $('#unidad_id').append($('<option>', {
+                value: item.id,
+                text: item.unidad
+            }));
+        });
+    </script>
+
+</body>
+</html>

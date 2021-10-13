@@ -1,0 +1,37 @@
+﻿@model Valorizaciones.Models.PartidasModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>perfil</title>
+</head>
+<body>
+    <div>
+        <h4>Detalle de Partida</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.partida)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.partida)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.unidad_id)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.unidad_id)
+            </dd>    
+        </dl>
+    </div>
+</body>
+</html>

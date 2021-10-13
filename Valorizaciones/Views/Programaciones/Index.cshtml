@@ -1,0 +1,159 @@
+﻿<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 align="center">Programaciones - <span id="span_contrato"></span></h2>
+<br>
+<div class="container">
+    <div class="row">
+        <div id="div_boton_nuevo" class="col-md-4">
+            <a id="btnNuevo" data-toggle="modal" href="#myModal" class="btn btn-success">Nuevo</a>
+        </div>
+
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-4">            
+        </div>
+    </div>
+    <br>
+
+    <div class="row-fluid">
+        <table role="grid" style="height: auto;" id="tabla_id" class="table table-bordered table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>N.</th>
+                    <th>Fecha</th>
+                    <th>Porcentaje</th>
+                    <th>Programado</th>
+                    <th>Real</th>
+                    <th>Valorización</th>
+                    <th>Resumen</th>
+                    <th>Curva S</th>
+                    <th id="th_editar" class="centro_text"><div align="center"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></div></th>
+                    <th id="th_eliminar" class="centro_text"><div align="center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></th>
+                </tr>
+            </thead>
+            <tbody role="rowgroup"></tbody>
+        </table>
+    </div>
+    <div id='div_contenedor'>
+        <ul id="lista_id_pagination" class="pagination lista_paginacion"></ul>
+    </div>
+</div>
+@*<a href="#myModal" class="btnEditar btn-link btn-info" data-toggle="modal" data-id="id"></a>*@
+<script src="~/Scripts/variables.js"></script>
+<script src="~/Scripts/helpers.js"></script>
+<script src="~/Scripts/JqueryCookie.js"></script>
+<script type="text/javascript">
+    var wl = window.location.href;
+    var contrato_id = wl.substring(wl.indexOf(parametro_url) + parametro_url.length);
+
+    var tipo_usuario = $.cookie('tipo_usuario_id');
+    if (tipo_usuario == "3" || tipo_usuario == "4") {
+        $("#th_editar").attr("style", "visibility: hidden");
+        $("#th_eliminar").attr("style", "visibility: hidden");
+        $("#div_boton_nuevo").hide();
+    }
+    if (tipo_usuario == "1" || tipo_usuario == "1") {
+        $("#div_boton_nuevo").show();
+    }
+    var ocultar = (tipo_usuario == "1" || tipo_usuario == "2") ? '' : 'visibility:hidden;';
+    
+    carga_inicial();
+    function carga_inicial() {
+        //CARGA INICIAL
+        var url_contrato = '/programaciones/report_programaciones/' + contrato_id;
+        //console.log('url_contrato:' + url_contrato);
+        $.getJSON(url_contrato)
+            .done(function (data) {
+            var numero_orden = 1;
+            (data).forEach(function (repo) {
+                //console.log(repo);                					                		
+                agregarFila(numero_orden, repo.contratista_id, repo.supervisor_id, repo.presupuesto_contratado, repo.contrato_id, repo.programacion_id, repo.fecha, repo.porcentaje, repo.programacion_ejecucion_id, repo.total_real);
+                numero_orden++;
+            });
+        });
+    }
+
+    var contador_fila = 1;
+    var color = '';
+    var enlace = '';
+    var mostrar = 0;
+    var bandera_mostrar = 0;
+    function agregarFila(numero_orden, contratista_id, supervisor_id, presupuesto_contratado, contrato_id, programacion_id, fecha, porcentaje, programacion_ejecucion_id, total_real) {
+        //console.log('filas_ejecutadas:' + filas_ejecutadas);
+        color = ((contador_fila % 2) == 0) ? "style='background-color: #EAF2F8'" : '';
+
+        if (programacion_ejecucion_id == 0 && bandera_mostrar == 0) {
+            mostrar = 1;
+            bandera_mostrar = 1;
+        }
+
+        if (programacion_ejecucion_id != "0" || mostrar == 1) {
+            console.log('a');
+            enlace = '<span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>';
+            enlace2 = '<span class="glyphicon glyphicon-indent-left" aria-hidden="true"></span>';
+            enlace3 = '<span class="glyphicon glyphicon-random" aria-hidden="true"></span>';
+        } else {
+            enlace =  '';
+            enlace2 = '';
+            enlace3 = '';
+        }
+        
+        mostrar = 0;        
+        
+        contador_fila++;
+        var fila = '<tr ' + color + ' class="seleccionado tabla_fila">';
+        fila += '<td align="center">' + numero_orden + '</td>';
+        fila += '<td>' + fecha.substring(0, 10) + '</td>';
+        fila += '<td>' + porcentaje + '</td>';
+        fila += '<td align="right">' + (presupuesto_contratado * porcentaje / 100).toFixed(3) + '</td>';
+        fila += '<td align="right">' + (total_real).toFixed(3) + '</td>';
+        fila += '<td align=center><a href="/valorizaciones/EvaluarEjecuciones/' + parametro_url_j + contrato_id + parametro_url + numero_orden + parametro_url + programacion_id + '">' + enlace + '</a></td>';
+        fila += '<td align=center><a target="_blank" href="/valorizaciones/EvaluarEjecucionesParaResumen/' + parametro_url_j + contrato_id + parametro_url + numero_orden + parametro_url + programacion_id + '">' + enlace2 + '</a></td>';
+        fila += '<td align=center><a target="_blank" href="/valorizaciones/Curva_s/' + parametro_url + contrato_id + '">' + enlace3 + '</a></td>';
+        fila += '<td style="' + ocultar + '" align="center"><a id="' + programacion_id + '" class="btn btn-default btn-xs btn_modificar_partida" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-pencil"></i></a></td>';
+        fila += '<td style="' + ocultar + '" align="center"><a id="' + programacion_id + '" class="btn btn-danger  btn-xs btn_eliminar_partida" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-remove"></i></a></td>';
+
+        fila += '</tr>';
+        $("#tabla_id").append(fila);
+    }
+
+    $("#btnNuevo").click(function (eve) {
+        $("#modal-content").load("/Programaciones/Nuevo/?contrato_id=" + contrato_id);
+    });
+
+    $(document).ready(function () {
+        $("#tabla_id").on('click', '.btn_modificar_partida', function () {
+            $("#modal-content").load("/Programaciones/modificar/" + $(this).attr('id'));
+        });
+        $("#tabla_id").on('click', '.btn_eliminar_partida', function () {
+            $("#modal-content").load("/Programaciones/eliminar/" + $(this).attr('id'));
+        });
+        $("#tabla_id").on('click', '.btn_perfil_partida', function () {
+            $("#modal-content").load("/Programaciones/perfil/" + $(this).attr('id'));
+        });
+
+        var url_contrato = '/contratos/js_contrato_ById/' + contrato_id;
+        $.getJSON(url_contrato)
+        .done(function (data) {
+            var url_proyecto = '/proyectos/js_proyecto_ById/' + data.proyecto_id;
+            //console.log('url_proyecto' + url_proyecto)
+            $.getJSON(url_proyecto)
+                .done(function (data) {
+                    $("#span_contrato").text(data.proyecto);
+                });
+        });
+    });
+</script>

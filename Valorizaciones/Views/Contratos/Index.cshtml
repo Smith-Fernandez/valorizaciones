@@ -1,0 +1,177 @@
+﻿<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2 align="center">Contratos</h2>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <a id="btnNuevo" data-toggle="modal" href="#myModal" class="btn btn-success">Nuevo</a>            
+        </div>
+
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-control form-control-sm" id="buscar_contrato" placeholder="Buscar contrato">
+            <input type="hidden" id="buscar_contrato_id" />
+        </div>
+
+        <div class="col-md-1">
+            <button class="btn btn-default" type="button" id="btn_buscar_contrato"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    </div>
+    <br>
+
+    <div class="row-fluid">
+        <table role="grid" style="height: auto;" id="tabla_id" class="table table-bordered table-responsive table-hover">
+            <thead>
+                <tr>
+                    <th>N.</th>
+                    <th>Proyecto</th>
+                    <th>numero</th>
+                    <th>fecha</th>
+                    <th>plazo</th>
+                    <th>Presupuesto<br />Contratado</th>
+                    <th>fecha_inicio_obra</th>
+                    <th>fecha_inicio_obra_max</th>
+                    <th>estado</th>
+                    <th>Usuarios</th>
+                    <th>Programación</th>
+                    <th>Presupuesto</th>
+                    <th id="th_editar" class="centro_text"><div align="center"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></div></th>
+                    <th id="th_eliminar" class="centro_text"><div align="center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div></th>
+                </tr>
+            </thead>
+            <tbody role="rowgroup"></tbody>
+        </table>
+    </div>
+    <div id='div_contenedor'>
+        <ul id="lista_id_pagination" class="pagination lista_paginacion"></ul>
+    </div>
+</div>
+
+<script src="~/Scripts/variables.js"></script>
+<script src="~/Scripts/JqueryCookie.js"></script>
+<script type="text/javascript">
+
+    var tipo_usuario = $.cookie('tipo_usuario_id');
+
+    if (tipo_usuario == "3" || tipo_usuario == "4") {
+        $("#th_editar").attr("style", "visibility: hidden");
+        $("#th_eliminar").attr("style", "visibility: hidden");
+    }
+    var ocultar = (tipo_usuario == "1" || tipo_usuario == "2") ? '' : 'visibility:hidden;';
+
+    $('#buscar_contrato').autocomplete({
+        source: '/contratos/js_contratos_buscador',
+        minLength: 2,
+        select: function (event, ui) {
+            $('#buscar_contrato_id').val(ui.item.contrato_id);
+        }
+    });
+
+    //$("#usuario").text($.cookie('User_usuario'));
+    //var tipo_usuario_id = $.cookie('tipo_usuario_id');
+
+    var usuario_id      = $.cookie('usuario_id');
+    var tipo_usuario_id = $.cookie('tipo_usuario_id');
+
+    carga_inicial();
+
+    function carga_inicial() {
+        //CARGA INICIAL        
+        if (tipo_usuario_id == "1") {
+            var url_l = '/Contratos/js_contratos';
+        } else {
+            var url_l = '/Contratos/Contratos_ByUsuario/' + usuario_id;
+        }
+        console.log('url_l:' + url_l);
+
+        $.getJSON(url_l)
+            .done(function (data) {
+                //carga = 1;//solo se usa al cargar la página, para activar la pagina N. 1
+                //total_filas = data.total_filas;
+                //construir_paginacion(total_filas, filas_por_pagina, carga)
+
+                var numero_orden = 1;
+                (data).forEach(function (repo) {
+                    agregarFila(numero_orden, repo.contrato_id, repo.proyecto, repo.razon_social, repo.numero, repo.fecha, repo.presupuesto_contratado, repo.plazo, repo.fecha_inicio_obra, repo.fecha_inicio_obra_max, repo.estado);
+                    numero_orden++;
+                });
+            });
+    }
+
+    var contador_fila = 1;
+    var color = '';
+    function agregarFila(numero_orden, contrato_id, proyecto, razon_social, numero, fecha, presupuesto_contratado, plazo, fecha_inicio_obra, fecha_inicio_obra_max, estado) {
+
+        color = ((contador_fila % 2) == 0) ? "style='background-color: #EAF2F8'" : '';
+        contador_fila++;
+
+        var fila = '<tr ' + color + ' class="seleccionado tabla_fila">';
+        fila += '<td align="center"><a id="' + contrato_id + '" class="btn btn-default btn-xs btn_perfil_contrato" data-toggle="modal" data-target="#myModal">' + numero_orden + '</a></td>';
+        fila += '<td>' + proyecto + '</td>';
+        fila += '<td>' + numero + '</td>';
+        fila += '<td>' + fecha.substring(0, 10) + '</td>';        
+        fila += '<td>' + plazo + '</td>';
+        fila += '<td>' + presupuesto_contratado + '</td>';
+        fila += '<td>' + fecha_inicio_obra.substring(0, 10) + '</td>';
+        fila += '<td>' + fecha_inicio_obra_max.substring(0, 10) + '</td>';
+        fila += '<td>' + estado + '</td>';
+
+        fila += '<td align=center><a href="/contrato_usuarios/index/' + parametro_url + contrato_id + '"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></td>';
+        fila += '<td align=center><a href="/programaciones/index/' + parametro_url + contrato_id + '"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span></a></a></td>';
+        fila += '<td align=center><a href="/contrato_partidas/index/' + parametro_url + contrato_id +'"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a></td>';
+        
+        fila += '<td style="' + ocultar + '" align="center"><a id="' + contrato_id + '" class="btn btn-default btn-xs btn_modificar_contrato" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-pencil"></i></a></td>';
+        fila += '<td style="' + ocultar + '" align="center"><a id="' + contrato_id + '" class="btn btn-danger btn-xs btn_eliminar_contrato"><i class="glyphicon glyphicon-remove"></i></a></td>';
+
+        fila += '</tr>';
+        $("#tabla_id").append(fila);
+    }    
+
+    $("#btnNuevo").click(function (eve) {
+        $("#modal-content").load("/contratos/nuevo");
+    });
+
+    
+    $(document).ready(function () {
+        $("#tabla_id").on('click', '.btn_modificar_contrato', function () {
+            $("#modal-content").load("/contratos/modificar/" + $(this).attr('id'));
+        });
+        $("#tabla_id").on('click', '.btn_eliminar_contrato', function () {
+            $("#modal-content").load("/contratos/eliminar/" + $(this).attr('id'));
+        });
+        $("#tabla_id").on('click', '.btn_perfil_contrato', function () {
+            $("#modal-content").load("/contratos/perfil/" + $(this).attr('id'));
+        });
+
+        $('#btn_buscar_contrato').on('click', function () {
+            $("#tabla_id > tbody").remove();
+            var ruta_url = '/contratos/js_contrato_ById/?id=' + $('#buscar_contrato_id').val();
+            $.getJSON(ruta_url)
+                .done(function (repo) {
+                    //var numero_orden = filas_por_pagina * (pagina - 1) + 1;
+                    $("#tabla_id > tbody").remove();
+                    var numero_orden = 1;
+                    agregarFila(numero_orden, repo.contrato_id, repo.proyecto, repo.razon_social, repo.numero, repo.fecha, repo.monto, repo.plazo, repo.fecha_inicio_obra, repo.fecha_inicio_obra_max, repo.estado);
+                    numero_orden++;
+                });
+            $("#tabla_id > tbody").remove();
+        });
+    });
+
+</script>

@@ -1,0 +1,707 @@
+﻿@model Valorizaciones.Models.ValorizacionTrabajoModel
+
+<div class="row">
+    <div class="col-xs-2"><a id="enlace_atras"><img src="~/Images/atras.jpg" width="40px" /></a></div>    
+
+    <div class="col-xs-8"><h2 align="center">Valorización</h2></div>
+    <div class="col-xs-2"></div>
+</div>
+<table>
+    <tr>
+        <td><span id="span_cui"></span></td>
+        <td></td>
+        <td colspan="4"><span id="span_contrato"></span></td>
+    </tr>
+    <tr>
+        <td>Cliente</td>
+        <td></td>
+        <td colspan="4"><span id="span_razon_social"></span></td>
+    </tr>
+    <tr>
+        <td>Lugar</td>
+        <td></td>
+        <td colspan="4">Lima - Lima - Carabayllo</td>
+    </tr>
+    <tr>
+        <td>Adelanto</td>
+        <td><span id="span_adelanto_directo"></span></td>
+        <td></td>
+        <td>Porcentaje Ganador:&nbsp;<span id="span_porcentaje_ganador"></span></td>
+        <td></td>
+        <td>Fecha Contrato: <span id="span_fecha"></span></td>
+        <td>Importe Obra:<span id="span_monto"></span></td>
+    </tr>
+</table>
+<hr />
+<div class="row">
+    <div class="col-xs-3"><b>Valorización:</b>N.<span id="programacion_numero"></span></div>
+    <div class="col-xs-3">Fecha:<span id="programacion_fecha"></span></div>
+    <div class="col-xs-3">Porcentaje:<span id="programacion_porcentaje"></span></div>
+    <div class="col-xs-3">Monto:<span id="programacion_monto"></span></div>
+</div>
+
+<br>
+<div class="container">
+    <br>
+    @using (Html.BeginForm("Insert", "valorizaciones"))
+    {
+        <div class="row-fluid">
+            <div id="contenedor_table">
+                <table role="grid" style="height: auto;" id="tabla_id" class="table table-bordered table-responsive table-hover tabla_items">
+                    <thead>
+                        <tr>
+                            <th rowspan="3">ITEM</th>
+                            <th rowspan="3">DESCRIPCIÓN</th>
+                            <th colspan="3" rowspan="2">PRESUPUESTO CONTRACTUAL MURO</th>
+                            <th colspan="9">VALORIZACIÓN</th>
+                            <th colspan="2" rowspan="2">SALDO POR EJECUTAR</th>
+                        </tr>
+                        <tr>
+                            <th colspan="3">Acumulado Anterior</th>
+                            <th colspan="3">Avance Actual</th>
+                            <th colspan="3">Acumulado Actual</th>                            
+                        </tr>
+                        <tr>
+                            <th>CANT/MTS</th>
+                            <th>PRECIO UNITARIO</th>
+                            <th>PRECIO PARCIAL</th>
+
+                            <th>METRADO</th>
+                            <th>PARCIAL</th>
+                            <th>% DE AVANCE</th>
+
+                            <th>METRADO</th>
+                            <th>PARCIAL</th>
+                            <th>% DE AVANCE</th>
+
+                            <th>METRADO</th>
+                            <th>PARCIAL</th>
+                            <th>% DE AVANCE</th>
+
+                            <th>METRADO</th>
+                            <th>VALORIZADO</th>
+                        </tr>
+                    </thead>
+                    <tbody role="rowgroup"></tbody>
+                </table>
+                <table role="grid" style="height: auto;" id="tabla_totales" class="table table-bordered table-responsive table-hover tabla_items">
+                    <tr>
+                        <td></td>
+                        <td>Total gastos directos:</td>
+                        <td align="right"><span id="lbl_gastos_directos"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="gastos_directos_acumulado"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="gastos_directos_actual"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="gastos_directos_suma"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="gastos_directos_saldo"></span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Gastos Generales<span id="span_gastos_generales"></span>:</td>
+                        <td align="right"><span id="lbl_gastos_generales"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="gastos_generales_acumulado"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="gastos_generales_actual"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="gastos_generales_suma"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="gastos_generales_saldo"></span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Utilidad<span id="span_utilidad"></span>:</td>
+                        <td align="right"><span id="lbl_gastos_utilidad"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="utilidad_acumulado"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="utilidad_actual"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="utilidad_suma"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="utilidad_saldo"></span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Sub Total:</td>
+                        <td align="right"><span id="lbl_sub_total"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="sub_total_acumulado"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="sub_total_actual"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="sub_total_suma"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="sub_total_saldo"></span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>IGV:</td>
+                        <td align="right"><span id="lbl_igv"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="igv_acumulado"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="igv_total_actual"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="igv_total_suma"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="igv_total_saldo"></span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Total:</td>
+                        <td align="right"><span id="lbl_total"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="total_total_acumulado"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="total_total_actual"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="total_total_suma"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="total_total_saldo"></span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Avance Real de Obra(%):</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="avance_acumulado"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="avance_actual"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="avance_suma"></span></td>
+                        <td></td>
+                        <td></td>
+                        <td align="right"><span id="avance_saldo"></span></td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr>
+                        <td>
+                            <b>Amortización:</b>
+                            <input class="form-control form-control-sm" type="text" name="amortizacion" id="amortizacion" />
+                        </td>                        
+                    </tr>
+                </table>
+            </div>
+
+            <div id="div_boton_nuevo" align="center">                
+                <input type="hidden" name="tipo_usuario" id="tipo_usuario" />
+                <input type="hidden" name="contrato_id" id="contrato_id" />
+                <input type="hidden" name="programacion_id" id="programacion_id" />
+                <input type="hidden" name="contratista_id" id="contratista_id" />
+                <input type="hidden" name="valorizacion_supervisor_id" id="valorizacion_supervisor_id" />
+                <input type="hidden" name="supervisor_id" id="supervisor_id" />
+                <input type="hidden" name="fecha" id="fecha" />
+                <input type="hidden" name="id" id="id" />
+                <input type="submit" value="Guardar Valorización" class="btn btn-primary" />
+            </div>
+        </div>
+    }
+    <div id='div_contenedor'>
+        <ul id="lista_id_pagination" class="pagination lista_paginacion"></ul>
+    </div>
+</div>
+
+<script src="~/Scripts/variables.js"></script>
+<script src="~/Scripts/helpers.js"></script>
+<script src="~/Scripts/JqueryCookie.js"></script>
+<script type="text/javascript">
+    var wl = window.location.href;
+    var param_url = wl.substring(wl.indexOf(parametro_url_j) + parametro_url_j.length);
+
+    var porciones                   = param_url.split(parametro_url);
+    var contrato_id                 = porciones[0];
+    var numero_orden                = porciones[1];
+    var programacion_id             = porciones[2];
+    var programacion_ejecucion_id   = porciones[3];
+    carga_inicial();
+    var estado_programacion_ejecuciones = 0;
+    var tipo_usuario = $.cookie('tipo_usuario_id');
+    var cookie_usuario_id = $.cookie('usuario_id');
+
+    $("#tipo_usuario").val(tipo_usuario);
+    $("#contrato_id").val(contrato_id);
+    $("#programacion_id").val(programacion_id);
+    $("#fecha").val(fecha_actual_js);
+
+    //para contratista
+    if (tipo_usuario == 4) {
+        $("#contratista_id").val(cookie_usuario_id);
+        $("#supervisor_id").val(0);
+        $("#valorizacion_supervisor_id").val(0);
+    }
+
+    console.log('tipo_usuario:' + tipo_usuario)
+    console.log('cookie_usuario_id:' + cookie_usuario_id)
+
+    //para supervisor
+    if (tipo_usuario == 3) {
+        $("#supervisor_id").val(cookie_usuario_id);
+    }
+    
+    $("#id").val(programacion_ejecucion_id);
+
+    function carga_inicial() {
+        //CARGA INICIAL        
+        var url_l = '/valorizaciones/Valorizaciones_Sin_Formato/' + contrato_id + parametro_url + programacion_id + parametro_url + programacion_ejecucion_id;
+        //console.log('url_l' + url_l);
+        $.getJSON(url_l)
+        .done(function (data) {
+            var url_2 = '/valorizaciones/js_valorizaciones_ByProgramacion_id/' + contrato_id + parametro_url + programacion_id + parametro_url + programacion_ejecucion_id;
+            //console.log('url_2' + url_2);
+            $.getJSON(url_2)
+                .done(function (data2) {
+                    format_valoraciones(data);
+                    
+                    //console.log(data);
+                    var numero_orden = 1;
+                    var porcentaje_gastos_generales;
+                    var porcentaje_utilidad;
+                    var t_gastos_directos = 0;
+                    (data2).forEach(function (repo) {
+
+                        agregarFila(numero_orden, repo.id, repo.contrato_partida_id, repo.contrato_id, repo.partida_id, repo.partida, repo.codigo, repo.cantidad, repo.precio, repo.aprobacion_contratista, repo.cantidad_valorizado, repo.valorizacion_id, repo.amortizacion, repo.contratista_id, repo.supervisor_id, repo.valorizacion_supervisor_id, repo.adelanto_directo, repo.gastos_generales, repo.gastos_otros, repo.utilidad, total[repo.partida_id], cantidad_valorizacion[repo.partida_id], acumulado_anterior_cantidad[repo.partida_id]);
+                        porcentaje_gastos_generales = repo.gastos_generales;
+                        porcentaje_utilidad = repo.utilidad;
+                        $("#amortizacion").val(repo.amortizacion);
+
+                        if (repo.precio > 0 && repo.cantidad > 0) {
+                            t_gastos_directos += (repo.precio * repo.cantidad);
+                        }
+                        numero_orden++;
+                    });
+
+                    $("#lbl_gastos_directos").text(t_gastos_directos.toFixed(3));
+                    $("#lbl_gastos_generales").text((t_gastos_directos * porcentaje_gastos_generales / 100).toFixed(3));
+                    $("#lbl_gastos_utilidad").text((t_gastos_directos * porcentaje_utilidad / 100).toFixed(3));
+                    $("#lbl_sub_total").text((t_gastos_directos * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100)).toFixed(3));
+                    let txt_lbl_sub_total = t_gastos_directos * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100);
+                    $("#lbl_igv").text((t_gastos_directos * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100) * 0.18).toFixed(3));
+                    $("#lbl_total").text((t_gastos_directos * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100) * 1.18).toFixed(3));
+                    $("#gastos_directos_acumulado").text(gastos_directos_acumulado.toFixed(3));
+                    $("#gastos_directos_actual").text(gastos_directos_actual.toFixed(3));
+                    $("#gastos_directos_suma").text(gastos_directos_suma.toFixed(3));
+                    $("#gastos_directos_saldo").text(gastos_directos_saldo.toFixed(3));
+
+                    $("#span_gastos_generales").text("(" + porcentaje_gastos_generales + ")%");
+                    $("#gastos_generales_acumulado").text(((gastos_directos_acumulado * porcentaje_gastos_generales) / 100).toFixed(3));
+                    $("#gastos_generales_actual").text(((gastos_directos_actual * porcentaje_gastos_generales) / 100).toFixed(3));
+                    $("#gastos_generales_suma").text(((gastos_directos_suma * porcentaje_gastos_generales) / 100).toFixed(3));
+                    $("#gastos_generales_saldo").text(((gastos_directos_saldo * porcentaje_gastos_generales) / 100).toFixed(3));
+
+                    $("#span_utilidad").text("(" + porcentaje_utilidad + ")%");
+                    $("#utilidad_acumulado").text(((gastos_directos_acumulado * porcentaje_utilidad) / 100).toFixed(3));
+                    $("#utilidad_actual").text(((gastos_directos_actual * porcentaje_utilidad) / 100).toFixed(3));
+                    $("#utilidad_suma").text(((gastos_directos_suma * porcentaje_utilidad) / 100).toFixed(3));
+                    $("#utilidad_saldo").text(((gastos_directos_saldo * porcentaje_utilidad) / 100).toFixed(3));
+
+                    $("#sub_total_acumulado").text((gastos_directos_acumulado * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100)).toFixed(3));
+                    let txt_sub_total_acumulado = gastos_directos_acumulado * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100);
+                    $("#sub_total_actual").text((gastos_directos_actual * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100)).toFixed(3));
+                    let txt_sub_total_actual = gastos_directos_actual * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100);
+                    $("#sub_total_suma").text((gastos_directos_suma * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100)).toFixed(3));
+                    let txt_sub_total_suma = gastos_directos_suma * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100);
+                    $("#sub_total_saldo").text((gastos_directos_saldo * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100)).toFixed(3));
+                    let txt_sub_total_saldo = gastos_directos_saldo * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100);
+
+                    $("#igv_acumulado").text((gastos_directos_acumulado * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100)*0.18).toFixed(3));
+                    $("#igv_total_actual").text((gastos_directos_actual * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100) * 0.18).toFixed(3));
+                    $("#igv_total_suma").text((gastos_directos_suma * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100) * 0.18).toFixed(3));
+                    $("#igv_total_saldo").text((gastos_directos_saldo * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100) * 0.18).toFixed(3));
+
+                    $("#total_total_acumulado").text((gastos_directos_acumulado * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100) * 1.18).toFixed(3));
+                    $("#total_total_actual").text((gastos_directos_actual * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100) * 1.18).toFixed(3));
+                    $("#total_total_suma").text((gastos_directos_suma * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100) * 1.18).toFixed(3));
+                    $("#total_total_saldo").text((gastos_directos_saldo * (1 + porcentaje_gastos_generales / 100 + porcentaje_utilidad / 100) * 1.18).toFixed(3));
+
+                    $("#avance_acumulado").text((txt_sub_total_acumulado / txt_lbl_sub_total).toFixed(3));
+                    $("#avance_actual").text((txt_sub_total_actual / txt_lbl_sub_total).toFixed(3));
+                    $("#avance_suma").text((txt_sub_total_suma / txt_lbl_sub_total).toFixed(3));
+                    $("#avance_saldo").text((txt_sub_total_saldo / txt_lbl_sub_total).toFixed(3));
+
+            });
+        });
+    }
+    
+    var total = [];
+    var cantidad_valorizacion = [];
+    var acumulado_anterior_cantidad = [];
+    var contar_nulo = 0;
+    var partida_nulo = 0;
+    var para_metro = 0;
+    function format_valoraciones(data) {
+        (data).forEach(function (repo) {
+            if (partida_nulo != repo.partida_id || contar_nulo == 0) {
+                total[repo.partida_id] = [];
+                cantidad_valorizacion[repo.partida_id] = [];
+                contar_nulo = 1;
+            }
+            total[repo.partida_id][repo.programacion_ejecucion_id] = repo.cantidad * repo.precio;
+            cantidad_valorizacion[repo.partida_id][repo.programacion_ejecucion_id] = repo.cantidad;
+
+            if (repo.programacion_ejecucion_id < programacion_ejecucion_id || programacion_ejecucion_id == 0) {
+                if (acumulado_anterior_cantidad[repo.partida_id] == null) acumulado_anterior_cantidad[repo.partida_id] = 0;
+                acumulado_anterior_cantidad[repo.partida_id] = acumulado_anterior_cantidad[repo.partida_id] + repo.cantidad; 
+            }
+            partida_nulo = repo.partida_id;
+        });
+        return 
+    }
+    
+    var contador_fila = 0;
+    var color = '';
+    var precio_parcial = 0;
+    var mostrar_precio_parcial = '';
+    var sumatoria_precio_parcial = 0;
+    var mostrar_precio = '';
+    var chek_aprobacion = '';
+    var text_metrado = '';
+    var checked = '';
+    var costo_directo = 0;
+    var sub_total_acumulado = 0;
+    var sub_total_actual = 0;
+    var gastos_generales = 0;
+    var utilidad = 0;
+    var gastos_directos_acumulado = 0;
+    var gastos_directos_actual = 0;
+    var gastos_directos_suma = 0;
+    var gastos_directos_saldo = 0;
+
+    var gastos_generales_acumulado = 0;
+    var gastos_generales_actual = 0;
+    var gastos_generales_suma = 0;
+    var gastos_generales_saldo = 0;
+
+    function agregarFila(numero_orden, id, contrato_partida_id, contrato_id, partida_id, partida, codigo, cantidad, precio, aprobacion_contratista, cantidad_valorizado, valorizacion_id, amortizacion, contratista_id, supervisor_id, valorizacion_supervisor_id, adelanto_directo, gastos_generales, gastos_otros, utilidad, monto = 0, cantidad_valorizacion = 0, acumulado_anterior = 0) {
+        //console.log('monto'+monto);
+
+        precio_parcial = (cantidad * precio);
+        costo_directo += precio_parcial;
+        checked = (aprobacion_contratista == 1) ? 'checked' : '';
+
+        if (precio != '' && precio != 0) {
+            mostrar_precio = precio.toFixed(3);
+            //console.log('acumulado_anterior:' + acumulado_anterior);
+            anterior_metrado        = acumulado_anterior.toFixed(3);
+            anterior_parcial        = (acumulado_anterior * precio).toFixed(3);
+            anterior_porcentaje     = ((acumulado_anterior / cantidad) * 100).toFixed(3) + "%";
+            actual_metrado          = (cantidad_valorizacion[programacion_ejecucion_id] == undefined) ? 0 : cantidad_valorizacion[programacion_ejecucion_id].toFixed(3);
+            actual_parcial          = (monto[programacion_ejecucion_id] == undefined) ? 0 : monto[programacion_ejecucion_id].toFixed(3);
+            actual_porcentaje       = (monto[programacion_ejecucion_id] == undefined) ? 0 : ((cantidad_valorizacion[programacion_ejecucion_id] / cantidad) * 100).toFixed(3) + "%";
+
+            suma_metrado    = (cantidad_valorizacion[programacion_ejecucion_id] == undefined) ? 0 : (acumulado_anterior + cantidad_valorizacion[programacion_ejecucion_id]).toFixed(3);
+            suma_parcial    = (cantidad_valorizacion[programacion_ejecucion_id] == undefined) ? 0 : ((acumulado_anterior + cantidad_valorizacion[programacion_ejecucion_id]) * precio).toFixed(3);
+            suma_porcentaje = (cantidad_valorizacion[programacion_ejecucion_id] == undefined) ? 0 : (((acumulado_anterior + cantidad_valorizacion[programacion_ejecucion_id]) / cantidad) * 100).toFixed(3) + "%";
+            saldo_metrado   = (cantidad_valorizacion[programacion_ejecucion_id] == undefined) ? 0 : (cantidad - (acumulado_anterior + cantidad_valorizacion[programacion_ejecucion_id])).toFixed(3);
+            saldo_parcial   = (cantidad_valorizacion[programacion_ejecucion_id] == undefined) ? 0 : ((cantidad - (acumulado_anterior + cantidad_valorizacion[programacion_ejecucion_id])) * precio).toFixed(3);
+
+            monto[programacion_ejecucion_id] = (monto[programacion_ejecucion_id] == undefined) ? 0 : monto[programacion_ejecucion_id];
+            cantidad_valorizacion[programacion_ejecucion_id] = (cantidad_valorizacion[programacion_ejecucion_id] == undefined) ? 0 : cantidad_valorizacion[programacion_ejecucion_id];
+            gastos_directos_acumulado   += (acumulado_anterior * precio);
+            gastos_directos_actual      += monto[programacion_ejecucion_id];
+            gastos_directos_suma        += ((acumulado_anterior + cantidad_valorizacion[programacion_ejecucion_id]) * precio);
+            gastos_directos_saldo       += (cantidad - (acumulado_anterior + cantidad_valorizacion[programacion_ejecucion_id])) * precio;
+        }
+        if (precio_parcial != '' && precio_parcial != 0) {
+            mostrar_precio_parcial = precio_parcial.toFixed(3);
+            sumatoria_precio_parcial += precio_parcial;
+        }
+
+        if (precio == 0 || cantidad == 0) {
+            precio = "";
+            precio_parcial = "";
+            cantidad = "";
+            mostrar_precio = "";
+            mostrar_precio_parcial = "";
+            anterior_metrado = "";
+            anterior_parcial = "";
+            anterior_porcentaje = "";
+            actual_metrado = "";
+            actual_parcial = "";
+            actual_porcentaje = "";
+            suma_metrado = "";
+            suma_parcial = "";
+            suma_porcentaje = "";
+            saldo_metrado = "";
+            saldo_parcial = "";
+        }
+
+        codigo = llenar_ceros_cadena(codigo, '.');
+        color = (precio == 0) ? "style='background-color: #EAF2F8'" : "style='background-color: #FFFFFF'";
+
+        var estado = 0;
+        estado_programacion_ejecuciones = estado;
+        $("#estado").val(estado + 1);
+
+        //administrador
+        if (tipo_usuario == "1") {
+            $("#div_boton_nuevo").hide();
+            var disabled = 'disabled';
+        }
+
+        //coordinar
+        if (tipo_usuario == "2") {
+            $("#div_boton_nuevo").hide();
+            var disabled = 'disabled';            
+        }
+        
+        //supervidor        
+        if (tipo_usuario == "3") {
+            //if (estado_programacion_ejecuciones == "0") {
+            //    $("#div_boton_nuevo").hide();
+            //    var disabled = 'disabled';
+            //}
+            //if (estado_programacion_ejecuciones == "1") {
+            //    $("#div_boton_nuevo").show();
+            //    var disabled = '';
+            //}
+            
+            //if (estado_programacion_ejecuciones == "2") {
+            //    $("#div_boton_nuevo").hide();
+            //    var disabled = 'disabled';
+            //}
+
+            if (supervisor_id == 0) {
+                var disabled = '';
+                $("#div_boton_nuevo").show();
+            } else if (supervisor_id > 0) {
+                var disabled = 'disabled';
+                $("#div_boton_nuevo").hide();
+            }            
+        }
+
+        //contratista
+        if (tipo_usuario == "4") {
+            
+            var disabled = 'disabled';
+            if (supervisor_id == 0) {
+                $("#div_boton_nuevo").show();
+            } else if (supervisor_id > 0) {                
+                $("#div_boton_nuevo").hide();
+            } 
+
+
+            //if (estado_programacion_ejecuciones == "0") {
+            //    $("#div_boton_nuevo").show();
+            //    var disabled = 'disabled';
+            //}
+            //if (estado_programacion_ejecuciones == "1") {
+            //    $("#div_boton_nuevo").hide();
+            //    var disabled = 'disabled';
+            //}
+            //if (estado_programacion_ejecuciones == "2") {
+            //    $("#div_boton_nuevo").hide();
+            //    var disabled = 'disabled';
+            //}
+        }
+
+        chek_aprobacion = (cantidad == 0) ? '' : '<input ' + checked + ' type="checkbox" value="1" ' + disabled + ' id="check_nepelito" name="valorizaciones[' + contador_fila + '].aprobacion_contratista">';
+        text_metrado = (cantidad == 0) ? '' : '<input class="form-control form-control-sm" type="text" name="valorizaciones[' + contador_fila + '].cantidad" value="' + actual_metrado + '"/>';
+
+        var fila = '<tr ' + color + ' class="seleccionado tabla_fila">';
+        fila += '<td><input type="hidden" name="valorizaciones[' + contador_fila + '].contrato_partida_id" value="' + contrato_partida_id + '">' + codigo + '</td>';
+        fila += '<td><input type="hidden" name="valorizaciones[' + contador_fila + '].id" value="' + valorizacion_id + '">' + partida + '</td>';
+        fila += '<td><input type="hidden" class="gastos_generales" value="' + gastos_generales + '">' + cantidad + '</td>';
+        fila += '<td align="right"><input type="hidden" class="utilidad" value="' + utilidad + '">' + mostrar_precio + '</td>';
+        fila += '<td align="right">' + mostrar_precio_parcial + '</td>';
+
+        fila += '<td align="right">' + anterior_metrado +'</td>';
+        fila += '<td align="right">' + anterior_parcial + '</td>';        
+        fila += '<td align="right">' + anterior_porcentaje + '</td>';
+
+        fila += '<td align="right">' + text_metrado + '</td>';
+        fila += '<td align="right">' + actual_parcial + '</td>';
+        fila += '<td align="right">' + actual_porcentaje + '</td>';
+
+        fila += '<td align="right">' + suma_metrado + '</td>';
+        fila += '<td align="right">' + suma_parcial + '</td>';
+        fila += '<td align="right">' + suma_porcentaje + '</td>';
+
+        fila += '<td align="right">' + saldo_metrado + '</td>';
+        fila += '<td align="right">' + saldo_parcial + '</td>';
+
+        fila += '<td> ' + chek_aprobacion + '</td>';
+        fila += '</tr>';
+        $("#tabla_id").append(fila);
+        contador_fila++;
+    }
+
+    $(document).ready(function () {
+
+        href = "/programaciones/index/" + parametro_url + contrato_id ;
+
+        $("#enlace_atras").attr("href", href);
+
+        $("#costo_directo").text(costo_directo.toFixed(3));
+
+        $("#tabla_id").on('click', '.btn_modificar_partida', function () {
+            $("#modal-content").load("/contrato_partidas/Modificar/" + $(this).attr('id'));
+        });
+        $("#tabla_id").on('click', '.btn_eliminar_partida', function () {
+            $("#modal-content").load("/contrato_partidas/Eliminar/" + $(this).attr('id'));
+        });
+        $("#tabla_id").on('click', '.btn_perfil_partida', function () {
+            $("#modal-content").load("/contrato_partidas/Perfil/" + $(this).attr('id'));
+        });
+
+        var url_contrato = '/contratos/js_contrato_ById/' + contrato_id;
+        $.getJSON(url_contrato)
+        .done(function (data) {
+            $("#presupuesto_notas").val(data.presupuesto_notas);
+            $("#contrato_utilidad").text(data.utilidad.toFixed(3));
+            $("#contrato_gastos_generales").text(data.gastos_generales.toFixed(3));
+            $("#contrato_gastos_otros").text(data.gastos_otros.toFixed(3));
+            $("#span_razon_social").text(data.razon_social);
+            $("#span_adelanto_directo").text(data.adelanto_directo + "%");
+            $("#span_porcentaje_ganador").text(data.porcentaje_ganador + "%");
+            $("#span_fecha").text(data.fecha.substring(0, 9));
+            $("#span_monto").text(data.presupuesto_contratado);
+            var monto_contrato = data.presupuesto_contratado;
+
+            var url_programacion = '/programaciones/js_programaciones_ById/' + programacion_id;
+            //console.log('url_programacion:' + url_programacion)
+            $.getJSON(url_programacion)
+            .done(function (data) {
+                $("#programacion_numero").text(numero_orden);
+                $("#programacion_fecha").text(data.fecha.substring(0, 10));
+                $("#programacion_porcentaje").text(data.porcentaje);
+                $("#programacion_monto").text(monto_contrato * (data.porcentaje / 100));
+            });
+
+            var url_proyecto = '/proyectos/js_proyecto_ById/' + data.proyecto_id;
+            //console.log('url_proyecto:' + url_proyecto)
+            $.getJSON(url_proyecto)
+            .done(function (data) {
+                $("#span_contrato").text(data.proyecto);
+                $("#span_cui").text(data.cui);
+            });
+        });
+
+        $('#contenedor_table').on('keyup change', '.tabla_items', function () {
+            limpiarTotales();
+
+            $('#tabla_id tbody tr').each(function () {
+                //var cantidad = $(this).find('td').eq(3).children().val();
+                var metrado_total               = parseFloat($(this).find('td').eq(2).text());
+                var precio                      = parseFloat($(this).find('td').eq(3).text());
+                var acumulado_metrado_anterior  = parseFloat($(this).find('td').eq(5).text());
+                var cantidad_actual             = parseFloat($(this).find('td').eq(8).children().val());
+
+                gastos_generales    = $(this).find('td').eq(2).children().val();
+                utilidad            = $(this).find('td').eq(3).children().val();
+
+                if (cantidad_actual > 0 && precio > 0) {
+                    $(this).find('td').eq(9).text((cantidad_actual * precio).toFixed(3));
+                    sub_total_actual += (cantidad_actual * precio);
+
+                    $(this).find('td').eq(10).text(((cantidad_actual / metrado_total) * 100).toFixed(3) + '%');
+                    $(this).find('td').eq(11).text((cantidad_actual + acumulado_metrado_anterior).toFixed(3));
+                    $(this).find('td').eq(12).text(((cantidad_actual + acumulado_metrado_anterior) * precio).toFixed(3));
+
+                    $(this).find('td').eq(13).text((((cantidad_actual + acumulado_metrado_anterior) / metrado_total) * 100).toFixed(3) + '%');
+                    $(this).find('td').eq(14).text((metrado_total - (cantidad_actual + acumulado_metrado_anterior)).toFixed(3));
+                    $(this).find('td').eq(15).text(((metrado_total - (cantidad_actual + acumulado_metrado_anterior)) * precio).toFixed(3));
+                }
+                calcularTotales(metrado_total, precio, sub_total_actual, gastos_generales, utilidad);
+            });
+        });
+    });
+
+    function limpiarTotales() {
+        sub_total_actual = 0;
+        metrado_total = 0;
+        precio = 0;
+        acumulado_metrado_anterior = 0;
+        cantidad_actual = 0;
+        gastos_generales = 0;
+        utilidad = 0;
+        $("#gastos_directos_actual").val('');
+        
+    }
+
+    var monto_sub_total;
+    var monto_sub_t_total;
+    var gastos_directos_acumulado;
+    var lbl_gastos_directos;
+    var lbl_sub_totala = 0;
+    var lbl_sub_total_actual = 0;
+    var lbl_sub_total_suma = 0;
+    var lbl_sub_total_saldo = 0;
+    
+    function calcularTotales(metrado_total, precio, sub_total_actual, gastos_generales, utilidad) {
+        /////actuales
+        $("#gastos_directos_actual").text(sub_total_actual.toFixed(3));
+        $("#gastos_generales_actual").text(((sub_total_actual * gastos_generales) / 100).toFixed(3));
+        $("#utilidad_actual").text(((sub_total_actual * utilidad) / 100).toFixed(3));
+        monto_sub_total = sub_total_actual * (1 + gastos_generales / 100 + utilidad / 100);
+        $("#sub_total_actual").text(monto_sub_total.toFixed(3));
+        $("#igv_total_actual").text((monto_sub_total * 0.18).toFixed(3));
+        $("#total_total_actual").text((monto_sub_total * 1.18).toFixed(3));
+
+        //////////////////////////////////////
+        //suma
+        gastos_directos_acumulado = parseFloat($("#gastos_directos_acumulado").text());
+        sub_total_actual = parseFloat(sub_total_actual.toFixed(3))
+        $("#gastos_directos_suma").text((sub_total_actual + gastos_directos_acumulado).toFixed(3));        
+        $("#gastos_generales_suma").text((((sub_total_actual + gastos_directos_acumulado) * gastos_generales) / 100).toFixed(3));
+        $("#utilidad_suma").text((((sub_total_actual + gastos_directos_acumulado) * utilidad) / 100).toFixed(3));
+        monto_sub_total_suma = (sub_total_actual + gastos_directos_acumulado) * (1 + gastos_generales / 100 + utilidad / 100);
+        $("#sub_total_suma").text(monto_sub_total_suma.toFixed(3));
+        $("#igv_total_suma").text((monto_sub_total_suma * 0.18).toFixed(3));
+        $("#total_total_suma").text((monto_sub_total_suma * 1.18).toFixed(3));
+
+        //saldo
+        lbl_gastos_directos = parseFloat($("#lbl_gastos_directos").text());
+        $("#gastos_directos_saldo").text((lbl_gastos_directos - (sub_total_actual + gastos_directos_acumulado)).toFixed(3));
+        $("#gastos_generales_saldo").text((((lbl_gastos_directos - (sub_total_actual + gastos_directos_acumulado)) * gastos_generales) / 100).toFixed(3));
+        $("#utilidad_saldo").text((((lbl_gastos_directos - (sub_total_actual + gastos_directos_acumulado)) * utilidad) / 100).toFixed(3));
+        monto_sub_total_saldo = (lbl_gastos_directos - (sub_total_actual + gastos_directos_acumulado)) * (1 + gastos_generales / 100 + utilidad / 100);
+        $("#sub_total_saldo").text(monto_sub_total_saldo.toFixed(3));
+        $("#igv_total_saldo").text((monto_sub_total_saldo * 0.18).toFixed(3));
+        $("#total_total_saldo").text((monto_sub_total_saldo * 1.18).toFixed(3));
+
+        ////////////////////////////////////////////////                
+        lbl_sub_total = parseFloat($("#lbl_sub_total").text());
+        lbl_sub_total_actual = parseFloat($("#sub_total_actual").text());
+        lbl_sub_total_suma = parseFloat($("#sub_total_suma").text());
+        lbl_sub_total_saldo = parseFloat($("#sub_total_saldo").text());        
+
+        $("#avance_actual").text((lbl_sub_total_actual / lbl_sub_total).toFixed(3));
+        $("#avance_suma").text((lbl_sub_total_suma / lbl_sub_total).toFixed(3));
+        $("#avance_saldo").text((lbl_sub_total_saldo / lbl_sub_total).toFixed(3));        
+        ///////////////////////////////////////////////////////////////////////////
+
+    }
+</script>

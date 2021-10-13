@@ -1,0 +1,54 @@
+﻿<h1>
+    Bienvenido Usuario:
+    <span id="usuario"></span>
+    <br />
+    <br />
+    Nivel de acceso: <span id="nivel_acceso"></span>
+</h1>
+
+<script src="~/Scripts/JqueryCookie.js"></script>
+<script type="text/javascript">
+    $("#usuario").text($.cookie('User_usuario'));
+    var tipo_usuario_id = $.cookie('tipo_usuario_id');
+    var nivel_usuario = '';
+    switch (tipo_usuario_id) {
+        case "1":
+            nivel_usuario = 'Administrador';
+            break;
+        case "2":
+            nivel_usuario = 'Coordinador';
+            break;
+        case "3":
+            nivel_usuario = 'Supervisor';
+            break;
+        case "4":
+            nivel_usuario = 'Contratista';
+            break;
+    }
+    $("#nivel_acceso").text(nivel_usuario);
+
+    $.getJSON('/Unidades/js_unidades')
+    .done(function (data) {
+        localStorage.setItem("unidades", JSON.stringify(data));
+    });
+
+    $.getJSON('/Tipo_proyectos/js_tipo_proyectos')
+    .done(function (data) {
+        localStorage.setItem("tipo_proyectos", JSON.stringify(data));
+    });
+
+    $.getJSON('/Paquetes/js_paquetes')
+    .done(function (data) {
+        localStorage.setItem("paquetes", JSON.stringify(data));
+    });
+
+    $.getJSON('/Tipo_usuarios/js_tipo_usuarios')
+    .done(function (data) {
+        localStorage.setItem("tipo_usuarios", JSON.stringify(data));
+    });
+
+    $.getJSON('/Actividades/js_actividades')
+        .done(function (data) {
+            localStorage.setItem("actividades", JSON.stringify(data));
+    });    
+</script>

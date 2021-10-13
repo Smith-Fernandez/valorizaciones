@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6AC2F5A9-C0C3-41A1-A09C-D3F0EC91045C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Valorizaciones</RootNamespace>
+    <AssemblyName>Valorizaciones</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.7.3\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ActividadesController.cs" />
+    <Compile Include="Controllers\ContratosController.cs" />
+    <Compile Include="Controllers\Contrato_partidasController.cs" />
+    <Compile Include="Controllers\Contrato_usuariosController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaquetesController.cs" />
+    <Compile Include="Controllers\PartidasController.cs" />
+    <Compile Include="Controllers\Partida_unidadesController.cs" />
+    <Compile Include="Controllers\ProgramacionesController.cs" />
+    <Compile Include="Controllers\Programacion_ejecucionController.cs" />
+    <Compile Include="Controllers\Programacion_ejecucionesController.cs" />
+    <Compile Include="Controllers\ProyectosController.cs" />
+    <Compile Include="Controllers\Tipo_proyectosController.cs" />
+    <Compile Include="Controllers\Tipo_usuariosController.cs" />
+    <Compile Include="Controllers\UnidadesController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="Controllers\ValorizacionesController.cs" />
+    <Compile Include="Datos\ActividadesAdmin.cs" />
+    <Compile Include="Datos\ContratosAdmin.cs" />
+    <Compile Include="Datos\Contrato_partidasAdmin.cs" />
+    <Compile Include="Datos\Contrato_usuariosAdmin.cs" />
+    <Compile Include="Datos\PaquetesAdmin.cs" />
+    <Compile Include="Datos\Conexion.cs" />
+    <Compile Include="Datos\PartidasAdmin.cs" />
+    <Compile Include="Datos\ProgramacionesAdmin.cs" />
+    <Compile Include="Datos\Programacion_ejecucionAdmin.cs" />
+    <Compile Include="Datos\Programacion_ejecucionesAdmin.cs" />
+    <Compile Include="Datos\ProyectosAdmin.cs" />
+    <Compile Include="Datos\Tipo_proyectosAdmin.cs" />
+    <Compile Include="Datos\Tipo_usuariosAdmin.cs" />
+    <Compile Include="Datos\UnidadesAdmin.cs" />
+    <Compile Include="Datos\UsuariosAdmin.cs" />
+    <Compile Include="Datos\Usuario_tipoAdmin.cs" />
+    <Compile Include="Datos\ValorizacionAdmin.cs" />
+    <Compile Include="Datos\ValorizacionesAdmin.cs" />
+    <Compile Include="Datos\VariablesAdmin.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ActividadesModel.cs" />
+    <Compile Include="Models\Cabecera_resumenModel.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\ContratoProgramacionModel.cs" />
+    <Compile Include="Models\ContratosModel.cs" />
+    <Compile Include="Models\Contrato_partidasModel.cs" />
+    <Compile Include="Models\Contrato_partidas_maestoDetalleModel.cs" />
+    <Compile Include="Models\Contrato_proyectosModel.cs" />
+    <Compile Include="Models\Contrato_usuariosModel.cs" />
+    <Compile Include="Models\PaquetesModel.cs" />
+    <Compile Include="Models\PartidasModel.cs" />
+    <Compile Include="Models\Partida_unidadesModel.cs" />
+    <Compile Include="Models\PersonaModel.cs" />
+    <Compile Include="Models\ProgramacionesModel.cs" />
+    <Compile Include="Models\ProgramacionesMontoModel.cs" />
+    <Compile Include="Models\Programaciones_reportModel.cs" />
+    <Compile Include="Models\Programacion_ejecucionesModel.cs" />
+    <Compile Include="Models\Programacion_valorizaciones_maestroDetalleModel.cs" />
+    <Compile Include="Models\ProyectosModel.cs" />
+    <Compile Include="Models\ResumenModel.cs" />
+    <Compile Include="Models\Tipo_proyectosModel.cs" />
+    <Compile Include="Models\Tipo_usuariosModel.cs" />
+    <Compile Include="Models\UnidadesModel.cs" />
+    <Compile Include="Models\UsuariosModel.cs" />
+    <Compile Include="Models\Usuario_tipoModel.cs" />
+    <Compile Include="Models\ValidacionSinFormatoModel.cs" />
+    <Compile Include="Models\ValorizacionesModel.cs" />
+    <Compile Include="Models\ValorizacionesSumaModel.cs" />
+    <Compile Include="Models\ValorizacionTrabajoModel.cs" />
+    <Compile Include="Models\Valorizacion_ejecucionModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Images\images.png" />
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="App_Browsers\qt.browser" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\helpers.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\JqueryCookie.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\variables.js" />
+    <Content Include="Views\Proyectos\index_con_vista.html" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Proyectos\Edit.cshtml" />
+    <Content Include="Views\Proyectos\Guardar.cshtml" />
+    <Content Include="Views\Proyectos\Index.cshtml" />
+    <Content Include="Views\Contrato_partidas\Eliminar.cshtml" />
+    <Content Include="Views\Contrato_partidas\Index.cshtml" />
+    <Content Include="Views\Contrato_partidas\modificar.cshtml" />
+    <Content Include="Views\Contrato_partidas\perfil.cshtml" />
+    <Content Include="Views\Contratos\adjuntar_partida.cshtml" />
+    <Content Include="Views\Contratos\Index.cshtml" />
+    <Content Include="Views\Partidas\eliminar.cshtml" />
+    <Content Include="Views\Partidas\Index.cshtml" />
+    <Content Include="Views\Partidas\modificar.cshtml" />
+    <Content Include="Views\Partidas\nuevo.cshtml" />
+    <Content Include="Views\Partidas\perfil.cshtml" />
+    <Content Include="Views\Shared\_Layout_login.cshtml" />
+    <Content Include="Views\Usuarios\eval.cshtml" />
+    <Content Include="Views\Usuarios\Inicio.cshtml" />
+    <Content Include="Views\Usuarios\login.cshtml" />
+    <Content Include="Views\Usuarios\Salir.cshtml" />
+    <Content Include="Views\Programaciones\Index.cshtml" />
+    <Content Include="Views\Programaciones\eliminar.cshtml" />
+    <Content Include="Views\Programaciones\perfil.cshtml" />
+    <Content Include="Views\Partidas\vistaPrueba.cshtml" />
+    <Content Include="Views\Unidades\Index.cshtml" />
+    <Content Include="Views\Partida_unidades\Detalle.cshtml" />
+    <Content Include="Views\Partida_unidades\prueba.cshtml" />
+    <Content Include="Views\Partida_unidades\perfil.cshtml" />
+    <Content Include="Views\Partida_unidades\modificar.cshtml" />
+    <Content Include="Views\Partida_unidades\eliminar.cshtml" />
+    <Content Include="Views\Contrato_partidas\Nuevo.cshtml" />
+    <Content Include="Views\Usuarios\Index.cshtml" />
+    <Content Include="Views\Usuarios\nuevo.cshtml" />
+    <Content Include="Views\Usuarios\modificar.cshtml" />
+    <Content Include="Views\Usuarios\eliminar.cshtml" />
+    <Content Include="Views\Contrato_usuarios\Index.cshtml" />
+    <Content Include="Views\Contrato_usuarios\Nuevo.cshtml" />
+    <Content Include="Views\Contrato_usuarios\Eliminar.cshtml" />
+    <Content Include="Views\Programaciones\Nuevo.cshtml" />
+    <Content Include="Views\Programaciones\Modificar.cshtml" />
+    <Content Include="Views\Contratos\perfil.cshtml" />
+    <Content Include="Views\Contratos\nuevo.cshtml" />
+    <Content Include="Views\Contratos\modificar.cshtml" />
+    <Content Include="Views\Contrato_partidas\Index2.cshtml" />
+    <Content Include="Views\Valorizaciones\Index.cshtml" />
+    <Content Include="Views\Valorizaciones\Curva_s.cshtml" />
+    <Content Include="Views\Valorizaciones\evaluarEjecuciones.cshtml" />
+    <Content Include="Views\Valorizaciones\Insert.cshtml" />
+    <Content Include="Views\Valorizaciones\Resumen.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\Paquetes\" />
+    <Folder Include="Views\Tipo_proyectos\" />
+    <Folder Include="Views\Tipo_usuarios\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49595</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:49595/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

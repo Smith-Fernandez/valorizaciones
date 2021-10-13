@@ -1,0 +1,73 @@
+﻿@model Valorizaciones.Models.Contrato_usuariosModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Nuevo</title>
+    <style>
+        ul.ui-autocomplete {
+            z-index: 1100;
+        }
+    </style>
+</head>
+<body>
+    <span id="dato_contrato_id">
+        @ViewData["vw_contrato_id"]
+    </span>
+
+    @using (Html.BeginForm("insert", "Contrato_usuarios"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Nuevos usuarios.</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="usuario_id">Usuario:</label>
+                <div class="col-md-10">
+                    <input type="text" id="usuario" class="form-control" />
+                    <input type="hidden" id="usuario_id" name="usuario_id" />
+                    <input type="hidden" id="contrato_id" name="contrato_id" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Guardar" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var variable_contrato_id = $("#dato_contrato_id").text();
+            $("#contrato_id").val(variable_contrato_id);
+
+            console.log('variable_contrato_id:' + variable_contrato_id);
+
+            $('form').attr('autocomplete', 'off');
+            $('#usuario').autocomplete({
+                source: '/Usuarios/js_usuario_buscador',
+                minLength: 2,
+                select: function (event, ui) {
+                    $('#usuario_id').val(ui.item.usuario_id);
+                }
+            });
+        });
+    </script>
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</body>
+</html>

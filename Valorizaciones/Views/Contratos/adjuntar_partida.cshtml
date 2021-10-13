@@ -1,0 +1,63 @@
+﻿<style>
+    ul.ui-autocomplete {
+        z-index: 1100;
+    }
+</style>
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Nuevo Pago</h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label>Cliente</label>
+                <input type="text" class="form-control input-sm" id="entidad_modal" name="entidad_modal" placeholder="Cliente">
+                <input type="hidden" name="entidad_id_modal" id="entidad_id_modal">
+            </div>
+
+            <div class="row">
+                <div class="form-group col-xs-6">
+                    <label>Dócumentos al crédito impagos</label>
+                    <select class="form-control" id="comprobantes" name="comprobantes">
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-xs-4">
+                    <label>Fecha</label>
+                    <input type="date" name="fecha_pago" id="fecha_pago" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-xs-4">
+                    <label>Pago</label>
+                    <input name="monto" id="monto" type="text" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-xs-4">
+                    <label>Modo Cobro:</label>
+                    <select class="form-control input-sm" name="modo_pago_modal" id="modo_pago_modal">
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Nota</label>
+                <textarea id="nota" name="nota" class="form-control"></textarea>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            <button type="button" class="btn btn-primary" id="btn_guardar_cobro">Guardar</button>
+            <input type="hidden" id="modal_cobro_id" />
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->

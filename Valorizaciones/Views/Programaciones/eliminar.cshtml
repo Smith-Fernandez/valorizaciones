@@ -1,0 +1,49 @@
+﻿@model Valorizaciones.Models.ProgramacionesModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>eliminar</title>
+</head>
+<body>
+    <h3>Esta seguro que desea elminar</h3>
+    <div>
+        <h4>Programación.</h4>
+        <hr />
+        <dl class="dl-horizontal">            
+            <dt>
+                @Html.DisplayNameFor(model => model.fecha)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.fecha)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.porcentaje)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.porcentaje)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm("Delete", "Programaciones"))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.id)
+            @Html.HiddenFor(model => model.contrato_id)
+            <div class="form-actions no-color">
+                <input type="submit" value="Eliminar" class="btn btn-default" />
+            </div>
+        }
+    </div>
+</body>
+</html>

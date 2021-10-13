@@ -1,0 +1,204 @@
+﻿
+@{
+    ViewBag.Title = "Resumen";
+}
+
+<h2>CONSORCIO DE LIMA</h2>
+
+<h3>CUADRO RESUMEN DE VALORIZACION N° </h3>
+
+<table role="grid" style="height: auto;" id="tabla_id" class="table table-bordered table-responsive table-hover">
+    <tr>
+        <td>OBRA:</td>
+        <td><span id="span_proyecto"></span></td>
+    </tr>
+    <tr>
+        <td>CONTRATISTA:</td>
+        <td id="span_contratista"></td>
+    </tr>
+    <tr>
+        <td>SUPERVISOR:</td>
+        <td id="span_supervisor"></td>
+    </tr>
+    <tr>
+        <td>PRESUPUESTO CONTRATADO:</td>
+        <td id="span_monto"></td>
+    </tr>
+</table>
+
+<table role="grid" style="height: auto;" id="tabla_id" class="table table-bordered table-responsive table-hover">
+    <tr>
+        <td rowspan="2">Descripción</td>
+        <td rowspan="2">Monto<br />contratado<br />SIN IGV(S/.)</td>
+        <td colspan="3">VALORIZACIÓN</td>
+        <td rowspan="2">% DE AVANCE<br />ACUMULADO</td>
+        <td rowspan="2">SALDO POR<br />VALORIZAR  (S/.)</td>
+    </tr>
+    <tr>
+        <td>ANTERIOR<br />(S/.)</td>
+        <td>ACTUAL<br />(S/.)</td>
+        <td>ACUMULADO<br />(S/.)</td>
+    </tr>
+    <tr>
+        <td>VALORIZACIÓN   (V)</td>
+        <td align="right" id="td_monto"></td>
+        <td align="right" id="td_val_anterior"></td>
+        <td align="right" id="td_val_actual"></td>
+        <td align="right" id="td_val_acumulado"></td>
+        <td align="right" id="td_val_porcentaje_acumulado"></td>
+        <td align="right" id="td_val_saldo_por_valorizar"></td>
+    </tr>
+    <tr>
+        <td>TOTAL  CONTRACTUAL<br />Avances en porcentaje</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>REAJUSTES (R)</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>DEDUCCIONES  (D)<br />POR ADELANTO EN EFECTIVO<br /><br />POR ADELANTO PARA MATERIALES</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>VALORIZACIÓN BRUTA (VB = V + R - D)</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>AMORTIZACIONES (A)<br />AMORTIZACION DEL ADELANTO DIRECTO<br /><br />AMORTIZACION DEL ADELANTO PARA MATERIALES</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>VALORIZACIÓN NETA  (VN = VB - A)</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>RETENCIONES ( C )<br />FONDOS DE GARANTIA (10% X VB)<br />GASTOS DE LICITACION<br />MULTA POR ATRASO DE OBRA<br />TOTAL</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>MONTO A PAGAR AL CONTRATISTA<br />EN EFECTIVO (VN-C)<br />MONTO POR I.G.V.  (VN x 0,18)<br />MONTO TOTAL CON  I.G.V.</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>TOTAL COMPROMISO DE PAGO</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+<script src="~/Scripts/variables.js"></script>
+<script src="~/Scripts/helpers.js"></script>
+<script src="~/Scripts/JqueryCookie.js"></script>
+<script type="text/javascript">
+    var wl          = window.location.href;
+    var param_url   = wl.substring(wl.indexOf(parametro_url_j) + parametro_url_j.length);
+
+    var porciones                   = param_url.split(parametro_url);
+    var contrato_id                 = porciones[0];
+    var numero_orden                = porciones[1];
+    var programacion_id             = porciones[2];
+    var programacion_ejecucion_id   = porciones[3];
+    console.log('programacion_ejecucion_id:' + programacion_ejecucion_id);
+
+    var url_contrato = '/contratos/js_cabecera_resumen/' + contrato_id;
+    $.getJSON(url_contrato)
+    .done(function (data) {        
+        (data).forEach(function (repo) {
+            $("#span_proyecto").text(repo.Proyecto);
+            $("#span_monto").text(repo.Monto);
+
+            if (repo.Tipo_usuario_id == "4") {
+                $("#span_contratista").text(repo.Usuario);
+            }
+
+            if (repo.Tipo_usuario_id == "3") {
+                $("#span_supervisor").text(repo.Usuario);
+            }            
+        });
+    });
+
+    var monto_acumulado_anterior = 0;
+    var monto_actual = 0;
+    var gasto_generales = 0;
+    var utilidad = 0;
+    var url_valorizacion = '/contratos/js_contrato_ById/' + contrato_id;
+    var td_val_acumulado = 0;
+    var monto_final_valorizacion = 0;
+    $.getJSON(url_valorizacion)
+        .done(function (data_contrato) {
+            gasto_generales = data_contrato.gastos_generales;
+            utilidad = data_contrato.utilidad;
+            monto_final_valorizacion = data_contrato.presupuesto_contratado * (1 + gasto_generales / 100 + utilidad / 100);
+            $("#td_monto").text((monto_final_valorizacion).toFixed(3));
+
+            var url_valorizacion = '/valorizaciones/Datos_resumen/' + contrato_id;
+            $.getJSON(url_valorizacion)
+            .done(function (data) {
+                (data).forEach(function (repo) {
+                    if (repo.Id < programacion_ejecucion_id) {
+                        monto_acumulado_anterior += repo.Resumen;
+                    }
+                    if (repo.Id == programacion_ejecucion_id) {
+                        monto_actual = repo.Resumen;
+                        $("#td_val_actual").text((monto_actual * (1 + gasto_generales / 100 + utilidad / 100)).toFixed(3));
+                    }
+                });
+                $("#td_val_anterior").text((monto_acumulado_anterior * (1 + gasto_generales / 100 + utilidad / 100)).toFixed(3));
+                $("#td_val_acumulado").text(((monto_acumulado_anterior + monto_actual) * (1 + gasto_generales / 100 + utilidad / 100)).toFixed(3));
+                td_val_acumulado = (monto_acumulado_anterior + monto_actual) * (1 + gasto_generales / 100 + utilidad / 100);
+
+                var resultado = (monto_final_valorizacion == 0) ? '' : ((td_val_acumulado / monto_final_valorizacion) * 100).toFixed(3) + '%';
+                $("#td_val_porcentaje_acumulado").text(resultado);
+                $("#td_val_saldo_por_valorizar").text((monto_final_valorizacion - td_val_acumulado).toFixed(3));
+            });
+
+
+    });
+
+</script>

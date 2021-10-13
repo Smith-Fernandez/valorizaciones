@@ -1,0 +1,276 @@
+﻿@model IEnumerable<Valorizaciones.Models.Contrato_partidasModel>
+
+@{
+    Layout = null;
+    decimal costo_directo = 0;
+    int contador_j = 0;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index2</title>
+    <style>
+        body {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            margin-right: 0px;
+            padding: 0;
+            color: black;
+            font-size: 10pt;
+            font-family: "Trebuchet MS", sans-serif;
+            background-color: #E2E2E2;
+        }
+
+        #titulo_presupuesto {
+            margin-top: 0px;
+            margin-bottom: 0px;
+            margin-left: 0px;
+            margin-right: 0px;
+            padding: 0;
+            font-size: 15pt;
+            font-family: "Trebuchet MS", sans-serif;
+        }
+    </style>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <script src="~/Scripts/variables.js"></script>
+    <script src="~/Scripts/helpers.js"></script>
+</head>
+<body>
+    <h2 align="center" id="titulo_presupuesto">Presupuesto</h2>
+    <table>
+        <tr>
+            <td>Presupuesto</td>
+            <td></td>
+            <td>&nbsp;&nbsp;<span id="span_cui"></span></td>
+            <td colspan="3">&nbsp;&nbsp;&nbsp;<span id="span_contrato"></span></td>
+        </tr>
+        <tr>
+            <td>Cliente</td>
+            <td></td>
+            <td colspan="4"><span id="span_razon_social"></span></td>
+        </tr>
+        <tr>
+            <td>Lugar</td>
+            <td></td>
+            <td colspan="4">Lima - Lima - Carabayllo</td>
+        </tr>
+        <tr>
+            <td>Adelanto</td>
+            <td><span id="span_adelanto_directo"></span></td>
+            <td></td>
+            <td>Porcentaje Ganador:&nbsp;<span id="span_porcentaje_ganador"></span></td>
+            <td></td>
+            <td colspan="2">Fecha Contrato: <span id="span_fecha"></span></td>
+        </tr>
+    </table>
+    <br />
+    <table role="grid" style="height: auto;" id="tabla_id" class="table table-bordered table-responsive table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.codigo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.partida)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.cantidad)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.precio)
+                </th>
+                <th>
+                    Precio Parcial
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                string sub_total;
+                string color;
+                string cantidad;
+                string precio;
+                costo_directo += item.precio * item.cantidad;
+                contador_j ++;
+                string codigo = item.codigo;
+
+                string[] words = codigo.Split('.');
+
+                int contar_porcion = 0;
+                foreach (var word in words)
+                {
+                    string pedazo = words[contar_porcion];
+                    if (pedazo.Length == 1) {
+                        words[contar_porcion] = "0" + words[contar_porcion];
+                    } 
+                    contar_porcion++;
+                }
+
+                codigo = string.Join(".", words);
+
+                if (item.cantidad == 0)
+                {
+                    color = "#EAF2F8";
+                    cantidad = "";
+                    precio = "";
+                    sub_total = "";
+                }
+                else
+                {
+                    color = "#FFFFFF";
+                    cantidad = item.cantidad.ToString();
+                    precio = item.precio.ToString("0.00");
+                    sub_total = (item.precio * item.cantidad).ToString("0.00");
+                }
+
+
+            <tr style="background-color: @color ">
+                <td>
+                    @codigo
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.partida)
+                </td>
+                <td>
+                    @cantidad
+                </td>
+                <td>
+                    <div align="right">@precio</div>
+                </td>
+                <td>
+                    <div align="right">@sub_total</div>
+                </td>
+            </tr>
+            }
+
+            <tr>
+                <td></td>
+                <td colspan="3">Costo directo:</td>
+                <td align="right"><span id="costo_directo">@costo_directo.ToString("0.000")</span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">Gastos generales(<span id="contrato_gastos_generales"></span>%):</td>
+                <td align="right"><span id="gastos_generales"></span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">Gastos otros(<span id="contrato_gastos_otros"></span>%):</td>
+                <td align="right"><span id="gastos_otros"></span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">Utilidad(<span id="contrato_utilidad"></span>%):</td>
+                <td align="right"><span id="utilidad"></span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">Sub Totalx:</td>
+                <td align="right"><span id="spam_sub_total"></span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">IGV(18%):</td>
+                <td align="right"><span id="spam_igv"></span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="3">Total:</td>
+                <td align="right"><span id="spam_total"></span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        var param_url = @ViewBag.param_url;
+        var costo_directo = $("#costo_directo").text();
+        var url_contrato = '/contratos/js_contrato_ById/' + param_url;
+        $.getJSON(url_contrato)
+        .done(function (data) {
+            $("#presupuesto_notas").val(data.presupuesto_notas);
+            $("#contrato_utilidad").text(data.utilidad.toFixed(2));
+            $("#contrato_gastos_generales").text(data.gastos_generales.toFixed(2));
+            $("#contrato_gastos_otros").text(data.gastos_otros.toFixed(2));
+
+            var gastos_generales = costo_directo * (data.gastos_generales / 100)
+            $("#gastos_generales").text(gastos_generales.toFixed(3));
+
+            var gastos_otros = costo_directo * (data.gastos_otros / 100);
+            $("#gastos_otros").text(gastos_otros.toFixed(3));
+
+            var utilidad = costo_directo * (data.utilidad / 100);
+            $("#utilidad").text(utilidad.toFixed(3));
+
+            var spa_sub_total = parseFloat(costo_directo) + parseFloat(gastos_generales) + parseFloat(gastos_otros) + parseFloat(utilidad);
+            $("#spam_sub_total").text(spa_sub_total.toFixed(3));
+
+            var spa_igv = spa_sub_total * 0.18;
+            $("#spam_igv").text(spa_igv.toFixed(3));
+
+            var spa_total = spa_sub_total * 1.18;
+            $("#spam_total").text(spa_total.toFixed(3));
+
+            var url_proyecto = '/proyectos/js_proyecto_ById/' + data.proyecto_id;
+            console.log('url_proyecto' + url_proyecto)
+            $.getJSON(url_proyecto)
+                    .done(function (data) {
+                $("#span_contrato").text(data.proyecto);
+            });
+        });
+
+        var url_contrato = '/contratos/js_contrato_ById/' + param_url;
+        $.getJSON(url_contrato)
+        .done(function (data) {
+            $("#presupuesto_notas").val(data.presupuesto_notas);
+            $("#contrato_utilidad").text(data.utilidad.toFixed(3));
+            $("#contrato_gastos_generales").text(data.gastos_generales.toFixed(3));
+            $("#contrato_gastos_otros").text(data.gastos_otros.toFixed(3));
+            $("#span_razon_social").text(data.razon_social);
+            $("#span_adelanto_directo").text(data.adelanto_directo + "%");
+            $("#span_porcentaje_ganador").text(data.porcentaje_ganador + "%");
+            $("#span_fecha").text(data.fecha.substring(0, 9));
+
+
+            var gastos_generales = costo_directo * (data.gastos_generales / 100)
+            $("#gastos_generales").text(gastos_generales.toFixed(3));
+
+            var gastos_otros = costo_directo * (data.gastos_otros / 100);
+            $("#gastos_otros").text(gastos_otros.toFixed(3));
+
+            var utilidad = costo_directo * (data.utilidad / 100);
+            $("#utilidad").text(utilidad.toFixed(3));
+
+            var sub_total = gastos_generales + gastos_otros + utilidad;
+            $("#sub_total").text(sub_total.toFixed(3));
+
+            var igv = sub_total * 0.18;
+            $("#igv").text(igv.toFixed(3));
+
+            var total = sub_total * 1.18;
+            $("#total").text(total.toFixed(3));
+
+            var url_proyecto = '/proyectos/js_proyecto_ById/' + data.proyecto_id;
+            console.log('url_proyecto' + url_proyecto)
+            $.getJSON(url_proyecto)
+                .done(function (data) {
+            $("#span_contrato").text(data.proyecto);
+            $("#span_cui").text(data.cui);
+        });
+    });
+    </script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Valorizaciones.Models.ProyectosModel>
+
+    @{
+    ViewBag.Title = "PROYECTOS";
+    }
+
+    <h2>PROYECTOS</h2>
+
+    <p>
+        @Html.ActionLink("Crear Nuevo", "Guardar")
+    </p>
+    <table id="tabla_id" class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.cui)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.proyecto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tipo_proyecto_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.actividad_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.total_obra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.total_gestion_proyecto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecha_convocatoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tiempo_ejecucion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.estado_registro)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+
+        string proyecto_id = item.fecha_convocatoria;
+        String cadena = item.fecha_convocatoria;
+        cadena = cadena.Substring(0, 10);
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.cui)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.proyecto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tipo_proyecto_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.actividad_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total_obra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.total_gestion_proyecto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => cadena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tiempo_ejecucion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estado_registro)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Detalle", "Details", new { id = item.id }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.id })
+            </td>
+            <td align="center"><a id="'+producto_id+'" class="btn btn-danger btn-xs btn_eliminar_producto"><i class="glyphicon glyphicon-remove"></i></a></td>
+        </tr>
+        }
+    </table>
+
+    <script type="text/javascript">
+    alert('Hola');
+
+    $(document).ready(function () {
+        $("#tabla_id").on('click', '.btn_eliminar_producto', function (e) {
+            var proyecto_id = $(this).attr('id');
+            var x = confirm("Desea eliminar producto:");
+            if (x) {
+                ruta_url_item = '/Proyectos/Delete/' + proyecto_id;
+                $.getJSON(ruta_url_item)
+                .done(function (data) {
+                    console.log('elimiación correcta' + data);
+                });
+            }
+        });
+    });
+    </script>

@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("VALORIZACIONES", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Inicio", "Inicio", "Usuarios")</li>
+                    <li id="li_usuarios">@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
+                    <li id="li_partidas">@Html.ActionLink("Partidas", "Index", "Partidas")</li>
+                    <li id="li_proyectos">@Html.ActionLink("Proyectos", "Index", "Proyectos")</li>
+                    <li>@Html.ActionLink("Contratos", "Index", "Contratos")</li>
+                    <li>@Html.ActionLink("Salir", "Salir", "Usuarios")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr/>
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+        </footer>
+    </div>
+    <script src="~/Scripts/JqueryCookie.js"></script>
+    <script type="text/javascript">
+
+        var tipo_usuario = $.cookie('tipo_usuario_id');
+        if (tipo_usuario == "3" || tipo_usuario == "4") {
+            $("#li_usuarios").attr("style", "visibility: hidden");
+            $("#li_partidas").attr("style", "visibility: hidden");
+            $("#li_proyectos").attr("style", "visibility: hidden");
+        }
+
+    </script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
