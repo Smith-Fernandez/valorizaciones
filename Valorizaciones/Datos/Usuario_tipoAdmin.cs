@@ -14,7 +14,7 @@ namespace Valorizaciones.Datos
         {
             Conectar();
             List<Usuario_tipoModel> lista = new List<Usuario_tipoModel>();
-            string sql = "SELECT usu.id usuario_id, usuario, correo, numero_documento, tipo_usuario_id, password, tus.tipo_usuario FROM usuarios usu INNER JOIN tipo_usuarios tus ON tus.id = usu.tipo_usuario_id WHERE usu.eliminado = 0 ";
+            string sql = "SELECT usu.id usuario_id, usuario, correo, numero_documento, tipo_usuario_id, password, tus.tipo_usuario FROM usuarios usu INNER JOIN tipo_usuarios tus ON tus.id = usu.tipo_usuario_id WHERE usu.eliminado = 0 Order by usu.id desc ";
             SqlCommand comando = new SqlCommand(sql, cnn);
             SqlDataReader reader = comando.ExecuteReader();
 
