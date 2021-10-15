@@ -113,7 +113,7 @@ namespace Valorizaciones.Datos
         public void Insert(UsuariosModel objUsuario)
         {
             Conectar();
-            string sql = "insert into usuarios (usuario, correo, numero_documento, tipo_usuario_id, password) values (@usuario, @correo, @numero_documento, @tipo_usuario_id, @password)";
+            string sql = "insert into usuarios (usuario, correo, numero_documento, tipo_usuario_id, password,eliminado) values (@usuario, @correo, @numero_documento, @tipo_usuario_id, @password,'0')";
             SqlCommand cmd = new SqlCommand(sql, cnn);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@usuario", objUsuario.usuario);
