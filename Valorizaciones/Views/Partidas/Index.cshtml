@@ -130,22 +130,32 @@
 
         //BUSCAR filtros
         $('#btn_buscar_partida').on('click', function () {
-            //pagina = 1; 
-            //param_producto_id = ($('#producto_id').val() == '') ? param_stand_url : $('#producto_id').val();            
-            $("#tabla_id > tbody").empty();
 
-            var ruta_url = '/Partidas/js_partidas_ByPartida/?partida_id=' + $('#buscar_partida_id').val();
-            $.getJSON(ruta_url)
-            .done(function (data) {                
-                //var numero_orden = filas_por_pagina * (pagina - 1) + 1;
-               // $("#tabla_id > tbody").remove();
-                var numero_orden = 1;
-                (data).forEach(function (repo) {
-                    agregarFila(numero_orden, repo.partida_id, repo.partida, repo.unidad_id, repo.unidad);
-                    numero_orden++;
-                });
-            });
-      //      $("#tabla_id > tbody").remove();
+            if ($("#buscar_partida").val() != "") {
+                //pagina = 1; 
+                //param_producto_id = ($('#producto_id').val() == '') ? param_stand_url : $('#producto_id').val();            
+                $("#tabla_id > tbody").empty();
+
+                var ruta_url = '/Partidas/js_partidas_ByPartida/?partida_id=' + $('#buscar_partida_id').val();
+                $.getJSON(ruta_url)
+                    .done(function (data) {
+                        //var numero_orden = filas_por_pagina * (pagina - 1) + 1;
+                        // $("#tabla_id > tbody").remove();
+                        var numero_orden = 1;
+                        (data).forEach(function (repo) {
+                            agregarFila(numero_orden, repo.partida_id, repo.partida, repo.unidad_id, repo.unidad);
+                            numero_orden++;
+                        });
+                    });
+                //      $("#tabla_id > tbody").remove();
+            }
+            else
+            {
+                $("#tabla_id > tbody").empty();
+                carga_inicial();
+            }
+      
+          
         });
 
     });
