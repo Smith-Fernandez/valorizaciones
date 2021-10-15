@@ -125,9 +125,10 @@
         //BUSCAR filtros
         $('#btn_buscar_usuario').on('click', function () {
             // codigo para listar todos los usuarios cuando no hay nada
-            if ($("#buscar_usuario_id").val() != "") {
+            if ($("#buscar_usuario").val() != "") {
                 //pagina = 1;
                 //param_producto_id = ($('#producto_id').val() == '') ? param_stand_url : $('#producto_id').val();
+                // limpiamos toda la tabla
                 $("#tabla_id > tbody").empty();
 
                 var ruta_url = '/Usuarios/js_usuario_ById/?usuario_id=' + $('#buscar_usuario_id').val();
@@ -148,8 +149,8 @@
                     });
                 //$("#tabla_id > tbody").remove();
                 // limpiamos el input hidden que contiene el id del usuario
-                $("#buscar_usuario_id").val("");
-                $("#buscar_usuario").val("");
+                //$("#buscar_usuario_id").val("");
+                //$("#buscar_usuario").val("");
                 
             } else
             {
