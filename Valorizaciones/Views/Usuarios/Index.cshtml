@@ -126,7 +126,7 @@
         $('#btn_buscar_usuario').on('click', function () {
             //pagina = 1;
             //param_producto_id = ($('#producto_id').val() == '') ? param_stand_url : $('#producto_id').val();
-            $("#tabla_id > tbody").remove();
+            $("#tabla_id > tbody").empty();
 
             var ruta_url = '/Usuarios/js_usuario_ById/?usuario_id=' + $('#buscar_usuario_id').val();
             $.getJSON(ruta_url)
@@ -137,14 +137,14 @@
                 //construir_paginacion(total_filas, filas_por_pagina, carga)
 
                 //var numero_orden = filas_por_pagina * (pagina - 1) + 1;
-                $("#tabla_id > tbody").remove();
+               // $("#tabla_id > tbody").remove();
                 var numero_orden = 1;
                 (data).forEach(function (repo) {
                     agregarFila(numero_orden, repo.usuario_id, repo.usuario, repo.correo, repo.numero_documento, repo.password, repo.tipo_usuario);
                     numero_orden++;
                 });
             });
-            $("#tabla_id > tbody").remove();
+            //$("#tabla_id > tbody").remove();
         });
     });
 </script>
