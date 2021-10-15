@@ -124,27 +124,40 @@
 
         //BUSCAR filtros
         $('#btn_buscar_usuario').on('click', function () {
-            //pagina = 1;
-            //param_producto_id = ($('#producto_id').val() == '') ? param_stand_url : $('#producto_id').val();
-            $("#tabla_id > tbody").empty();
+            // codigo para listar todos los usuarios cuando no hay nada
+            if ($("#buscar_usuario_id").val() != "") {
+                //pagina = 1;
+                //param_producto_id = ($('#producto_id').val() == '') ? param_stand_url : $('#producto_id').val();
+                $("#tabla_id > tbody").empty();
 
-            var ruta_url = '/Usuarios/js_usuario_ById/?usuario_id=' + $('#buscar_usuario_id').val();
-            $.getJSON(ruta_url)
-            .done(function (data) {
-                //carga = 1;//se usa para activar la pagina N. 1
-                //total_filas = data.total_filas;
-                //$("#lista_id_pagination > li").remove();
-                //construir_paginacion(total_filas, filas_por_pagina, carga)
+                var ruta_url = '/Usuarios/js_usuario_ById/?usuario_id=' + $('#buscar_usuario_id').val();
+                $.getJSON(ruta_url)
+                    .done(function (data) {
+                        //carga = 1;//se usa para activar la pagina N. 1
+                        //total_filas = data.total_filas;
+                        //$("#lista_id_pagination > li").remove();
+                        //construir_paginacion(total_filas, filas_por_pagina, carga)
 
-                //var numero_orden = filas_por_pagina * (pagina - 1) + 1;
-               // $("#tabla_id > tbody").remove();
-                var numero_orden = 1;
-                (data).forEach(function (repo) {
-                    agregarFila(numero_orden, repo.usuario_id, repo.usuario, repo.correo, repo.numero_documento, repo.password, repo.tipo_usuario);
-                    numero_orden++;
-                });
-            });
-            //$("#tabla_id > tbody").remove();
+                        //var numero_orden = filas_por_pagina * (pagina - 1) + 1;
+                        // $("#tabla_id > tbody").remove();
+                        var numero_orden = 1;
+                        (data).forEach(function (repo) {
+                            agregarFila(numero_orden, repo.usuario_id, repo.usuario, repo.correo, repo.numero_documento, repo.password, repo.tipo_usuario);
+                            numero_orden++;
+                        });
+                    });
+                //$("#tabla_id > tbody").remove();
+                // limpiamos el input hidden que contiene el id del usuario
+                $("#buscar_usuario_id").val("");
+                $("#buscar_usuario").val("");
+                
+            } else
+            {
+                $("#tabla_id > tbody").empty();
+                carga_inicial();
+            }          
+
+            
         });
     });
 </script>
