@@ -307,7 +307,8 @@ namespace Valorizaciones.Datos
                 cmd.Parameters.AddWithValue("@fecha_inicio_obra", objContratos.fecha_inicio_obra);
                 cmd.Parameters.AddWithValue("@fecha_inicio_obra_max", objContratos.fecha_inicio_obra_max);
                 cmd.Parameters.AddWithValue("@fecha_entrega_terreno", objContratos.fecha_entrega_terreno);
-                cmd.Parameters.AddWithValue("@estado", objContratos.estado);
+                //inertamos estado 1 en duro
+                cmd.Parameters.AddWithValue("@estado",1);
                 cmd.Parameters.AddWithValue("@porcentaje_ganador", objContratos.porcentaje_ganador);
                 cmd.ExecuteNonQuery();
             }
