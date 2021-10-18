@@ -181,7 +181,7 @@ namespace Valorizaciones.Datos
                 "con.adelanto_directo, " +
                 "con.porcentaje_ganador, " +
                 "plazo,	gastos_generales, gastos_otros, utilidad, " +
-                "fecha_inicio_obra, fecha_inicio_obra_max, con.fecha_entrega_terreno fecha_entrega_terreno, estado FROM contratos con INNER JOIN proyectos pro ON pro.id = con.proyecto_id";
+                "fecha_inicio_obra, fecha_inicio_obra_max, con.fecha_entrega_terreno fecha_entrega_terreno, estado FROM contratos con INNER JOIN proyectos pro ON pro.id = con.proyecto_id where con.estado= 1";
                 SqlCommand comando = new SqlCommand(sql, cnn);
                 SqlDataReader reader = comando.ExecuteReader();
 
