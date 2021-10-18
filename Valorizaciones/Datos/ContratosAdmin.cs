@@ -346,7 +346,8 @@ namespace Valorizaciones.Datos
             Conectar();
             try
             {
-                string fecha = objContratos.fecha;
+               // string fecha = "2021-09-17";
+                /* string fecha = objContratos.fecha;
                 string[] fechas = fecha.Split('/');
                 fecha = fechas[2] + "/" + fechas[1] + "/" + fechas[0];
 
@@ -360,10 +361,28 @@ namespace Valorizaciones.Datos
 
                 string fecha_entrega_terreno = objContratos.fecha_entrega_terreno;
                 string[] fechas4 = fecha_entrega_terreno.Split('/');
-                fecha_entrega_terreno = fechas4[2] + "/" + fechas4[1] + "/" + fechas4[0];
+                fecha_entrega_terreno = fechas4[2] + "/" + fechas4[1] + "/" + fechas4[0];*/
 
-                string sql = "UPDATE contratos SET ruc = '" + objContratos.ruc + "', razon_social = '" + objContratos.razon_social + "', numero = '" + objContratos.numero + "', presupuesto_referencial = '" + objContratos.presupuesto_referencial + "', presupuesto_contratado = '" + objContratos.presupuesto_contratado + "', plazo = '" + objContratos.plazo + "', adelanto_directo = '" + objContratos.adelanto_directo + "', gastos_generales = '" + objContratos.gastos_generales + "', gastos_otros = '" + objContratos.gastos_otros + "', utilidad = '" + objContratos.utilidad + "', fecha = '" + fecha + "', fecha_inicio_obra = '" + fecha_inicio_obra + "', fecha_inicio_obra_max = '" + fecha_inicio_obra_max + "', fecha_entrega_terreno = '" + fecha_entrega_terreno + "', porcentaje_ganador = '" + objContratos.porcentaje_ganador + "' WHERE id = " + objContratos.id;
+                //string sql = "UPDATE contratos SET ruc = '" + objContratos.ruc + "', razon_social = '" + objContratos.razon_social + "', numero = '" + objContratos.numero + "', presupuesto_referencial = '" + objContratos.presupuesto_referencial + "', presupuesto_contratado = '" + objContratos.presupuesto_contratado + "', plazo = '" + objContratos.plazo + "', adelanto_directo = '" + objContratos.adelanto_directo + "', gastos_generales = '" + objContratos.gastos_generales + "', gastos_otros = '" + objContratos.gastos_otros + "', utilidad = '" + objContratos.utilidad + "', fecha = '" + fecha + "', fecha_inicio_obra = '" + fecha + "', fecha_inicio_obra_max = '" + fecha + "', fecha_entrega_terreno = '" + fecha + "', porcentaje_ganador = '" + objContratos.porcentaje_ganador + "' WHERE id = " + objContratos.id;
+                string sql = "UPDATE contratos SET ruc = '" + objContratos.ruc;
+                       sql += "', proyecto_id = " + objContratos.proyecto_id; 
+                       sql += ", razon_social = '" + objContratos.razon_social;
+                       sql += "', numero= '" + objContratos.numero;
+                       sql += "', fecha = '" + objContratos.fecha;
+                       sql += "', presupuesto_referencial = " + Convert.ToDecimal(objContratos.presupuesto_referencial).ToString("0.##");
+                       sql += ", presupuesto_contratado = " + Convert.ToDecimal(objContratos.presupuesto_contratado).ToString("0.##");
+                       sql += ", plazo = " + Convert.ToDecimal(objContratos.plazo).ToString("0.##");
+                       sql += ", adelanto_directo = " + Convert.ToDecimal(objContratos.adelanto_directo).ToString("0.##");
+                       sql += ", gastos_generales = " + Convert.ToDecimal(objContratos.gastos_generales).ToString("0.##");
+                       sql += ", gastos_otros = " + Convert.ToDecimal(objContratos.gastos_otros).ToString("0.##");
+                       sql += ", utilidad = " + Convert.ToDecimal(objContratos.utilidad).ToString("0.##");
+                       sql += ", fecha_inicio_obra = '" + objContratos.fecha_inicio_obra;
+                       sql += "' , fecha_inicio_obra_max = '" + objContratos.fecha_inicio_obra_max;
+                       sql += "' , fecha_entrega_terreno = '" + objContratos.fecha_entrega_terreno;
+                       sql += "', porcentaje_ganador = " + Convert.ToDecimal(objContratos.porcentaje_ganador).ToString("0.##");
 
+                //sql += "', presupuesto_referencial = " +objContratos.presupuesto_referencial;
+                sql +=" WHERE id = " + objContratos.id;
                 SqlCommand cmd = new SqlCommand(sql, cnn);
                 cmd.ExecuteNonQuery();
             }
