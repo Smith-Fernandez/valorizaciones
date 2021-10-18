@@ -86,7 +86,17 @@ namespace Valorizaciones.Controllers
         //{
         //    return new Rotativa.ActionAsPdf("Index");
         //}
-
+        public ActionResult eliminar(int id)
+        {
+             ContratosModel modelo = adminContratos.Contrato_Byid(id);
+            //return View(modelo);
+            return View(modelo);
+        }
+        public ActionResult Delete_update(int id)
+        {
+            adminContratos.Delete_update(id);
+            return View("Index");
+        }
 
     }
 }

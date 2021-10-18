@@ -137,7 +137,7 @@
         fila += '<td align=center><a href="/contrato_partidas/index/' + parametro_url + contrato_id +'"><span class="glyphicon glyphicon-book" aria-hidden="true"></span></a></td>';
         
         fila += '<td style="' + ocultar + '" align="center"><a id="' + contrato_id + '" class="btn btn-default btn-xs btn_modificar_contrato" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-pencil"></i></a></td>';
-        fila += '<td style="' + ocultar + '" align="center"><a id="' + contrato_id + '" class="btn btn-danger btn-xs btn_eliminar_contrato"><i class="glyphicon glyphicon-remove"></i></a></td>';
+        fila += '<td style="' + ocultar + '" align="center"><a id="' + contrato_id + '" class="btn btn-danger btn-xs btn_eliminar_contrato" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-remove"></i></a></td>';
 
         fila += '</tr>';
         $("#tabla_id").append(fila);
@@ -153,6 +153,7 @@
             $("#modal-content").load("/contratos/modificar/" + $(this).attr('id'));
         });
         $("#tabla_id").on('click', '.btn_eliminar_contrato', function () {
+           // alert("desea eliminar");
             $("#modal-content").load("/contratos/eliminar/" + $(this).attr('id'));
         });
         $("#tabla_id").on('click', '.btn_perfil_contrato', function () {

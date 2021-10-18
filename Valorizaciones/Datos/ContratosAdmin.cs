@@ -181,7 +181,7 @@ namespace Valorizaciones.Datos
                 "con.adelanto_directo, " +
                 "con.porcentaje_ganador, " +
                 "plazo,	gastos_generales, gastos_otros, utilidad, " +
-                "fecha_inicio_obra, fecha_inicio_obra_max, con.fecha_entrega_terreno fecha_entrega_terreno, estado FROM contratos con JOIN proyectos pro ON pro.id = con.proyecto_id";
+                "fecha_inicio_obra, fecha_inicio_obra_max, con.fecha_entrega_terreno fecha_entrega_terreno, estado FROM contratos con INNER JOIN proyectos pro ON pro.id = con.proyecto_id";
                 SqlCommand comando = new SqlCommand(sql, cnn);
                 SqlDataReader reader = comando.ExecuteReader();
 
@@ -442,6 +442,15 @@ namespace Valorizaciones.Datos
                 Desconectar();
             }
             return objContrato;
+        }
+        public void Delete_update(int id)
+        {
+            Conectar();
+            string sql = "UPDATE contratos SET estado =  0 WHERE id = @id";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.ExecuteNonQuery();
         }
     }
 }

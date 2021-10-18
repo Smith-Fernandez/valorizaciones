@@ -286,6 +286,7 @@
     <Content Include="Views\Valorizaciones\evaluarEjecuciones.cshtml" />
     <Content Include="Views\Valorizaciones\Insert.cshtml" />
     <Content Include="Views\Valorizaciones\Resumen.cshtml" />
+    <Content Include="Views\Contratos\eliminar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
