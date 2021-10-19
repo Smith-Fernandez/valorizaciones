@@ -43,6 +43,7 @@ namespace Valorizaciones.Controllers
 
         public ActionResult Nuevo(ProyectosModel modelo)
         {
+            //cambio 19-10-2021
             admin.Guardar(modelo);
             IEnumerable<ProyectosModel> lista = admin.Consultar();
             return View("Index", lista);
