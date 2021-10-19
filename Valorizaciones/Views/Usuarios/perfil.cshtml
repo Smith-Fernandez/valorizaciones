@@ -1,0 +1,54 @@
+﻿@model Valorizaciones.Models.Usuario_tipoModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>perfil</title>
+</head>
+<body>
+    <div>
+        <h4>Detalle del Usuario</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.usuario)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.usuario)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.correo)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.correo)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.numero_documento)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.numero_documento)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.tipo_usuario)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.tipo_usuario)
+            </dd>
+        </dl>
+    </div>
+</body>
+</html>
+

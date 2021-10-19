@@ -113,5 +113,11 @@ namespace Valorizaciones.Controllers
             return View("Login");
         }
 
+        public ActionResult perfil(int id)
+        {
+            Usuario_tipoModel modelo = adminUser_tipo.ConsultarItemObj(id);
+            return View(modelo);
+        }
+
     }
 }
