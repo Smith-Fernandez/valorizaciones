@@ -8,7 +8,6 @@ using Valorizaciones.Models;
 
 namespace Valorizaciones.Datos
 {
-    //HOLA CAMBIO22021
     public class ActividadesAdmin : Conexion
     { 
         public IEnumerable<ActividadesModel> ConsultarAll()
