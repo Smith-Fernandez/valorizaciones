@@ -10,6 +10,50 @@ namespace Valorizaciones.Datos
 {
     public class ProyectosAdmin:Conexion
     {
+        public IEnumerable<ProyectosModel> ConsultarAll()
+        {
+            Conectar();
+            List<ProyectosModel> lista = new List<ProyectosModel>();
+
+            //string sql = "select * from proyectos where estado_eliminado = 0;";
+            string sql = "Select cui, proyecto, abreviatura, paquete_id, actividad_id, expediente_tecnico, total_obra, total_supervision, total_interferencia,total_gestion_proyecto, ubigeo,fecha_convocatoria," +
+                "fecha_estimada_buena_pro, fecha_estimada_consentimiento, fecha_estimada_contrato, fecha_estimada_inicio, fecha_entrega_terreno,tiempo_ejecucion,estado_registro, tipo_proyecto from proyectos pro join tipo_proyectos tipop on pro.tipo_proyecto_id = tipop.id where estado_eliminado = 0;";
+            SqlCommand comando = new SqlCommand(sql, cnn);
+
+            SqlDataReader reader = comando.ExecuteReader();
+
+            while (reader.Read())
+            {
+                ProyectosModel modelo = new ProyectosModel();
+
+                //modelo.id = Convert.ToInt32(reader["id"]);
+                modelo.cui = reader["cui"].ToString();
+                modelo.proyecto = reader["proyecto"].ToString();
+                modelo.abreviatura = reader["abreviatura"].ToString();
+                modelo.tipo_proyecto = reader["tipo_proyecto"].ToString();
+                modelo.paquete_id = Convert.ToInt32(reader["paquete_id"]);
+                modelo.actividad_id = Convert.ToInt32(reader["actividad_id"]);
+                modelo.expediente_tecnico = reader["expediente_tecnico"].ToString();
+
+                modelo.total_obra = Decimal.Parse(reader["total_obra"].ToString());
+                modelo.total_supervision = Decimal.Parse(reader["total_supervision"].ToString());
+                modelo.total_interferencia = Decimal.Parse(reader["total_interferencia"].ToString());
+                modelo.total_gestion_proyecto = Decimal.Parse(reader["total_gestion_proyecto"].ToString());
+                modelo.ubigeo = reader["ubigeo"].ToString();
+
+                modelo.fecha_convocatoria = reader["fecha_convocatoria"].ToString();
+                modelo.fecha_estimada_buena_pro = reader["fecha_estimada_buena_pro"].ToString();
+                modelo.fecha_estimada_consentimiento = reader["fecha_estimada_consentimiento"].ToString();
+                modelo.fecha_estimada_contrato = reader["fecha_estimada_contrato"].ToString();
+                modelo.fecha_estimada_inicio = reader["fecha_estimada_inicio"].ToString();
+                modelo.fecha_entrega_terreno = reader["fecha_entrega_terreno"].ToString();
+
+                modelo.tiempo_ejecucion = Convert.ToInt32(reader["tiempo_ejecucion"]);
+                modelo.estado_registro = Convert.ToInt32(reader["estado_registro"]);
+                lista.Add(modelo);
+            }
+            return lista;
+        }
         public IEnumerable<ProyectosModel> Consultar()
         {
             Conectar();            
@@ -306,7 +350,16 @@ namespace Valorizaciones.Datos
             {
                 Desconectar();
             }            
-        }        
+        }
+        public void Delete_update(int id)
+        {
+            Conectar();
+            string sql = "UPDATE proyectos SET estado_eliminado =  1 WHERE id = @id";
+            SqlCommand cmd = new SqlCommand(sql, cnn);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.ExecuteNonQuery();
+        }
 
     }
 }

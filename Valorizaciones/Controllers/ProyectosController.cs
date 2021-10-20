@@ -21,7 +21,7 @@ namespace Valorizaciones.Controllers
 
         public JsonResult js_proyectos()
         {
-            IEnumerable<ProyectosModel> lista = admin.Consultar();
+            IEnumerable<ProyectosModel> lista = admin.ConsultarAll();
             return Json(lista, JsonRequestBehavior.AllowGet);
         }
 
@@ -64,9 +64,16 @@ namespace Valorizaciones.Controllers
 
         public ActionResult Delete(int id)
         {
-            admin.Delete(id);
+            /*admin.Delete(id);
             IEnumerable<ProyectosModel> lista = admin.Consultar();
-            return View("Index", lista);
+            return View("Index", lista);*/
+            ProyectosModel modelo = admin.ConsultarItem(id);
+            return View(modelo);
+        }
+        public ActionResult Delete_update(int id)
+        {
+            admin.Delete_update(id);
+            return View("Index");
         }
 
         [HttpGet]

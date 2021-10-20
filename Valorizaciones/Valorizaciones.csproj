@@ -288,6 +288,7 @@
     <Content Include="Views\Valorizaciones\Resumen.cshtml" />
     <Content Include="Views\Contratos\eliminar.cshtml" />
     <Content Include="Views\Usuarios\perfil.cshtml" />
+    <Content Include="Views\Proyectos\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
