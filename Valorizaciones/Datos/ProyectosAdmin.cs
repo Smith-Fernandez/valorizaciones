@@ -16,8 +16,11 @@ namespace Valorizaciones.Datos
             List<ProyectosModel> lista = new List<ProyectosModel>();
 
             //string sql = "select * from proyectos where estado_eliminado = 0;";
-            string sql = "Select cui, proyecto,   pro.abreviatura, actividad_id, expediente_tecnico, total_obra, total_supervision, total_interferencia,total_gestion_proyecto, ubigeo,fecha_convocatoria, fecha_estimada_buena_pro, fecha_estimada_consentimiento, fecha_estimada_contrato, fecha_estimada_inicio, fecha_entrega_terreno,tiempo_ejecucion,estado_registro, tipo_proyecto, paquete" +
-                " from proyectos pro join tipo_proyectos tipop on pro.tipo_proyecto_id = tipop.id join paquetes pap on pro.paquete_id = pap.id WHERE estado_eliminado = 0;";
+            //string sql = "Select cui, proyecto,   pro.abreviatura, actividad_id, expediente_tecnico, total_obra, total_supervision, total_interferencia,total_gestion_proyecto, ubigeo,fecha_convocatoria, fecha_estimada_buena_pro, fecha_estimada_consentimiento, fecha_estimada_contrato, fecha_estimada_inicio, fecha_entrega_terreno,tiempo_ejecucion,estado_registro, tipo_proyecto, paquete" +
+            // " from proyectos pro join tipo_proyectos tipop on pro.tipo_proyecto_id = tipop.id join paquetes pap on pro.paquete_id = pap.id WHERE estado_eliminado = 0;";
+
+            string sql = "Select cui, proyecto, pro.abreviatura, expediente_tecnico, total_obra, total_supervision, total_interferencia,total_gestion_proyecto, ubigeo,fecha_convocatoria, fecha_estimada_buena_pro, fecha_estimada_consentimiento, fecha_estimada_contrato, fecha_estimada_inicio, fecha_entrega_terreno,tiempo_ejecucion,estado_registro, tipo_proyecto, paquete, actividad from proyectos pro join tipo_proyectos tipop on pro.tipo_proyecto_id = tipop.id join paquetes pap on pro.paquete_id = pap.id join actividades activ on pro.actividad_id = activ.id where estado_eliminado = 0;";
+
             SqlCommand comando = new SqlCommand(sql, cnn);
 
             SqlDataReader reader = comando.ExecuteReader();
@@ -32,7 +35,7 @@ namespace Valorizaciones.Datos
                 modelo.abreviatura = reader["abreviatura"].ToString();
                 modelo.tipo_proyecto = reader["tipo_proyecto"].ToString();
                 modelo.paquete = reader["paquete"].ToString();
-                modelo.actividad_id = Convert.ToInt32(reader["actividad_id"]);
+                modelo.actividad = reader["actividad"].ToString();
                 modelo.expediente_tecnico = reader["expediente_tecnico"].ToString();
 
                 modelo.total_obra = Decimal.Parse(reader["total_obra"].ToString());
