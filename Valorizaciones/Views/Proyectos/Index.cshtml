@@ -53,7 +53,7 @@
                     <th>cui</th>
                     <th>proyecto</th>
                     <th>TIPO DE PROYECTO</th>
-                    <th>paquete_id</th>
+                    <th>PAQUETE</th>
 
                     <th>actividad_id</th>
                     <th>total_obra</th>
@@ -111,7 +111,7 @@
                 var numero_orden = 1;
                 (data).forEach(function (repo) {
                     console.log(repo);
-                    agregarFila(numero_orden, repo.id, repo.cui, repo.proyecto, repo.abreviatura, repo.tipo_proyecto, repo.paquete_id, repo.actividad_id, repo.expediente_tecnico, repo.total_obra, repo.total_supervision, repo.total_interferencia, repo.total_gestion_proyecto, repo.ubigeo, repo.fecha_convocatoria, repo.fecha_estimada_buena_pro, repo.fecha_estimada_consentimiento, repo.fecha_estimada_contrato, repo.fecha_estimada_inicio, repo.fecha_entrega_terreno, repo.tiempo_ejecucion, repo.estado_registro);
+                    agregarFila(numero_orden, repo.id, repo.cui, repo.proyecto, repo.abreviatura, repo.tipo_proyecto, repo.paquete, repo.actividad_id, repo.expediente_tecnico, repo.total_obra, repo.total_supervision, repo.total_interferencia, repo.total_gestion_proyecto, repo.ubigeo, repo.fecha_convocatoria, repo.fecha_estimada_buena_pro, repo.fecha_estimada_consentimiento, repo.fecha_estimada_contrato, repo.fecha_estimada_inicio, repo.fecha_entrega_terreno, repo.tiempo_ejecucion, repo.estado_registro);
                     numero_orden++;
                 });
             });
@@ -119,7 +119,7 @@
 
     var contador_fila = 1;
     var color = '';
-    function agregarFila(numero_orden, id, cui, proyecto, abreviatura, tipo_proyecto, paquete_id, actividad_id, expediente_tecnico, total_obra, total_supervision, total_interferencia, total_gestion_proyecto, ubigeo, fecha_convocatoria, fecha_estimada_buena_pro, fecha_estimada_consentimiento, fecha_estimada_contrato, fecha_estimada_inicio, fecha_entrega_terreno, tiempo_ejecucion, estado_registro) {
+    function agregarFila(numero_orden, id, cui, proyecto, abreviatura, tipo_proyecto, paquete, actividad_id, expediente_tecnico, total_obra, total_supervision, total_interferencia, total_gestion_proyecto, ubigeo, fecha_convocatoria, fecha_estimada_buena_pro, fecha_estimada_consentimiento, fecha_estimada_contrato, fecha_estimada_inicio, fecha_entrega_terreno, tiempo_ejecucion, estado_registro) {
 
         color = ((contador_fila % 2) == 0) ? "style='background-color: #EAF2F8'" : '';
         contador_fila++;
@@ -129,7 +129,7 @@
         fila += '<td>' + cui + '</td>';
         fila += '<td>' + proyecto + '</td>';
         fila += '<td>' + tipo_proyecto + '</td>';
-        fila += '<td>' + paquete_id + '</td>';
+        fila += '<td>' + paquete + '</td>';
 
         fila += '<td>' + actividad_id + '</td>';
         fila += '<td>' + total_obra + '</td>';

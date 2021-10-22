@@ -14,6 +14,7 @@ namespace Valorizaciones.Models
         public int tipo_proyecto_id { get; set; }
         public string tipo_proyecto { get; set; }
         public int paquete_id { get; set; }
+        public string paquete { get; set; }
         public int actividad_id { get; set; }
         public string expediente_tecnico { get; set; }
         public decimal total_obra { get; set; }
